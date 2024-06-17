@@ -1,15 +1,22 @@
-import { Route, Routes, Navigate } from "react-router";
+import { Route, Routes } from "react-router";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const PageRoutes = (props) => {
   return (
     <Routes>
-      {/* <Route path="/" element={<Dashboard />}></Route>
-      <Route path="/login" element={<Login />}></Route> */}
+      <Route path="/login" element={<Login />} />
+      {/* <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoutes>
+            <Dashboard />
+          </ProtectedRoutes>
+        }
+      /> */}
     </Routes>
   );
-  //   return <Routes>{loggedIn ? <Navigate to="/dashboard" /> : <Login />}</Routes>;
 };
 
 export default PageRoutes;
