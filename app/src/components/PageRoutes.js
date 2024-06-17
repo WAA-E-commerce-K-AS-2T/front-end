@@ -1,9 +1,15 @@
-import { Route, Routes, Redirect } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
-import { useSelector } from "react-redux";
 
-export default function PageRoutes(props) {
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
-  return <Routes>{loggedIn ? <Redirect to="/dashboard" /> : <Login />}</Routes>;
-}
+const PageRoutes = (props) => {
+  return (
+    <Routes>
+      {/* <Route path="/" element={<Dashboard />}></Route>
+      <Route path="/login" element={<Login />}></Route> */}
+    </Routes>
+  );
+  //   return <Routes>{loggedIn ? <Navigate to="/dashboard" /> : <Login />}</Routes>;
+};
+
+export default PageRoutes;
