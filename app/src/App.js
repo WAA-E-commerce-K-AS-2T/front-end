@@ -8,9 +8,7 @@ function App() {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   return (
     <div className="App">
-      {loggedIn && <Header />}
       <PageRoutes />
-      {loggedIn && <Footer />}
     </div>
   );
 }
