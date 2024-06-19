@@ -9,7 +9,6 @@ import { setLoading } from "./../redux/actions";
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +17,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
+
     const data = {
       email: email,
       fullName: username,
@@ -75,7 +75,10 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -89,7 +92,10 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
               User type
             </label>
             <div className="flex gap-4 items-center">
@@ -121,7 +127,10 @@ const Register = () => {
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
               Are you already?
-              <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/login">
+              <Link
+                className="text-blue-500 hover:text-blue-800 font-bold"
+                to="/login"
+              >
                 Login
               </Link>
             </p>

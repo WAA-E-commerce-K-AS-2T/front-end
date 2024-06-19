@@ -10,6 +10,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const navigate = useNavigate();
 
@@ -39,14 +40,22 @@ const Login = () => {
     setPassword("");
   };
 
+  const handleOnClick = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
+
+
         <h3 className="text-2xl font-bold text-center">Welcome!</h3>
         <form className="mt-4" onSubmit={login}>
           <div>
+
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
               email
+
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -59,7 +68,10 @@ const Login = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -77,7 +89,7 @@ const Login = () => {
           </div>
         </form>
         <div className="mt-6 text-center">
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm" onClick={handleOnClick}>
             Don't have an account?{" "}
             <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/register">
               Create an account
