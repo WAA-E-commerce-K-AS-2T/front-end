@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../components/controllers/customButton";
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Implement login logic here (e.g., API call)
+    console.log("Login attempt:", username, password);
+
+    // Clear form after submission
     setUsername("");
     setPassword("");
   };
@@ -19,7 +23,7 @@ const Login = () => {
         <div className="flex justify-center items-center mb-6">
           <img className="w-20 h-20 rounded-full" src="./../../assets/images/cart.gif" alt="Walmart Logo" />
         </div>
-        <h3 className="text-2xl font-bold text-center">Welcome!</h3>
+        <h3 className="text-2xl font-bold text-center">Register</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -49,24 +53,44 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex items-center justify-between mt-4">
-            <CustomButton text="Login"></CustomButton>
-            <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/forgotpassword">
-              Forgot Password?
-            </Link>
+          <div className="mt-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              User type
+            </label>
+            <div className="flex gap-4 items-center">
+              <input
+                type="radio"
+                value="SELLER"
+                label="Seller"
+                name="authType"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
+              />
+              <label for="seller">Seller</label>
+              <input
+                type="radio"
+                value="BUYER"
+                name="authType"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
+              />
+              <label for="buyer">Buyer</label>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center mt-6">
+            <CustomButton text="Register"></CustomButton>
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-gray-600 text-sm">
+              Are you already?
+              <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/login">
+                Login
+              </Link>
+            </p>
           </div>
         </form>
-        <div className="mt-6 text-center">
-          <p className="text-gray-600 text-sm">
-            Don't have an account?{" "}
-            <Link className="text-blue-500 hover:text-blue-800 font-bold" href="/register">
-              Create an account
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;

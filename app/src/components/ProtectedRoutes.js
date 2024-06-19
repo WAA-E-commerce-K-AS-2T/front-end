@@ -5,9 +5,10 @@ const ProtectedRoutes = ({ children }) => {
   const location = useLocation();
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 
-  if (!loggedIn) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
+  //   if (!loggedIn) {
+  //     return <Navigate to="/login" replace state={{ from: location }} />;
+  //   }
+  console.log("children");
 
   return children;
 };
