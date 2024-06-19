@@ -5,6 +5,7 @@ import CustomButton from "../components/controllers/CustomButton";
 
 import { useDispatch } from "react-redux";
 import { setLoading } from "./../redux/actions";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,13 @@ const Register = () => {
 
     try {
       await axios.post("http://localhost:8080/signup", data);
-      alert("Registered successfully");
+      toast.success("Succesfully registered!");
+
       navigate("/login");
       dispatch(setLoading(false));
     } catch (err) {
-      console.error(err);
       dispatch(setLoading(false));
+      toast.error("Error!");
     }
 
     setUsername("");
