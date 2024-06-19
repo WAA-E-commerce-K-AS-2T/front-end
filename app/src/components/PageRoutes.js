@@ -11,14 +11,17 @@ import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
+import ProductDetails from "../pages/ProductDetails";
 
 const PageRoutes = (props) => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<ProductDetails />} />
         <Route path="/user/*">
           <Route
             path="dashboard"
