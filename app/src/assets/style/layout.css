@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+  @apply sticky top-0 w-full z-50 bg-white;
+}
+.header .top {
+  @apply h-16 border-b-2 border-solid border-black flex gap-8 p-4 px-8 items-center justify-between shrink-0;
+}
