@@ -13,7 +13,7 @@ import Profile from "../pages/user/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
 import EditProfile from "../pages/user/EditProfile";
 import ProductDetails from "../pages/ProductDetails";
-import ShippingForm from "../cartComponents/ShippingForm";
+import ShippingForm from "./cartComponents/ShippingForm";
 import ProductCart from "../pages/ProductCart";
 
 const PageRoutes = (props) => {
@@ -26,7 +26,7 @@ const PageRoutes = (props) => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/" element={<ProductDetails />} />
         <Route path="/shipping" element={<ShippingForm />} />
-        <Route path="/shipping" element={<ProductCart />} />
+        <Route path="/cart" element={<ProductCart />} />
         <Route path="/user/*">
           <Route
             path="profile"
