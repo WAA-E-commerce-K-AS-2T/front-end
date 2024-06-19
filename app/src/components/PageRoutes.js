@@ -6,7 +6,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import ProductDetails from "../pages/ProductDetails";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
-import Products from "../pages/seller/Products";
+import Products from "../pages/seller/products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
@@ -19,9 +19,9 @@ const PageRoutes = (props) => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/register" element={<Register />} />
       <Route path="/products" element={<ProductBuy />} />
+      <Route path="/product/:id" element={<ProductDetails />} />
 
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
