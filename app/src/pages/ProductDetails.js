@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import { productData, productDetails } from "../utils/data";
 import OIP from "./../assets/images/OIP.png";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
+import Breadcrumb from "../components/Breadcrumb";
 
 const ProductDetails = () => {
   const { name, image, price, description, details, specifications, reviews } =
@@ -16,7 +18,7 @@ const ProductDetails = () => {
       <div className="flex flex-col lg:flex-row lg:space-x-8">
         {/* Left side: Breadcrumbs, image, and variant options */}
         <div className="flex-1 lg:w-1/4 flex flex-col">
-          <nav className="text-sm text-gray-600 mb-4 flex-col">
+          {/* <nav className="text-sm text-gray-600 mb-4 flex-col">
             <a href="/" className="hover:underline">
               Home
             </a>{" "}
@@ -27,7 +29,9 @@ const ProductDetails = () => {
             </a>{" "}
             &gt;
             <span> {name}</span>
-          </nav>
+          </nav> */}
+          <Breadcrumb />
+
           <div className="flex-1">
             <img src={OIP} alt={name} className="w-full h-auto mb-4 lg:mb-0" />
           </div>
@@ -171,6 +175,12 @@ const ProductDetails = () => {
               onClick={() => setIsAboutCollapsed(!isAboutCollapsed)}>
               About this item
             </h2>
+            {/* {isAboutCollapsed ? (
+              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
+            ) : (
+              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
+            )} */}
+
             {!isAboutCollapsed && (
               <p className="text-sm text-gray-700 mb-4">{details}</p>
             )}
