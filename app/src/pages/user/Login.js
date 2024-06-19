@@ -18,7 +18,6 @@ const Login = () => {
       email: email,
       password: password,
     };
-    console.log(data);
     try {
       axios.post("http://localhost:8080/login", data).then((response) => {
         dispatch(setLoading(false));
