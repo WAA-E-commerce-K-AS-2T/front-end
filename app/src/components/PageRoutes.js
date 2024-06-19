@@ -4,14 +4,13 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 // import ProductDetails from "../pages/ProductDetails";
-import ProductBuy from "../pages/ProductBuy";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
-import AddProduct from "../pages/seller/AddProduct";
 import Products from "../pages/seller/Products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
+import ProductBuy from "../pages/Products";
 
 const PageRoutes = (props) => {
   return (

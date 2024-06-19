@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../../components/controllers/CustomButton";
+import CustomButton from "../../components/controllers/customButton";
 
 const Products = () => {
-  const [products, setProducts] = useState([{ name: "Apple MacBook Pro 17", category: "color", price: 1000 }]);
+  const [products, setProducts] = useState([
+    { name: "Apple MacBook Pro 17", category: "color", price: 1000 },
+  ]);
   const navigate = useNavigate();
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
@@ -44,8 +46,12 @@ const Products = () => {
         </thead>
         <tbody>
           {products.map((item) => (
-            <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
-              <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
+            <tr
+              key={item.name}
+              className="odd:bg-white even:bg-gray-50 border-b">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium  whitespace-nowrap">
                 <Link to="/:id"> Apple MacBook Pro 17"</Link>
               </th>
               <td className="px-6 py-4">Silver</td>
@@ -54,10 +60,14 @@ const Products = () => {
               <td className="px-6 py-4">10</td>
               <td className="px-6 py-4 text-teal-500">Approved</td>
               <td className="px-6 py-4">
-                <Link to="" className="font-medium text-blue-600 mr-4 hover:underline">
+                <Link
+                  to=""
+                  className="font-medium text-blue-600 mr-4 hover:underline">
                   Edit
                 </Link>
-                <Link to="" className="font-medium text-blue-600  hover:underline">
+                <Link
+                  to=""
+                  className="font-medium text-blue-600  hover:underline">
                   Delete
                 </Link>
               </td>

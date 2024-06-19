@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../../components/controllers/CustomButton";
+import CustomButton from "../../components/controllers/customButton";
 
 const Reviews = () => {
-  const [purchases, setPurchases] = useState([{ product: "", username: "", rating: "", reviews: "" }]);
+  const [purchases, setPurchases] = useState([
+    { product: "", username: "", rating: "", reviews: "" },
+  ]);
   const navigate = useNavigate();
   const userType = "admin";
   return (
@@ -32,8 +34,12 @@ const Reviews = () => {
         </thead>
         <tbody>
           {purchases.map((item) => (
-            <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
-              <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
+            <tr
+              key={item.name}
+              className="odd:bg-white even:bg-gray-50 border-b">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium  whitespace-nowrap">
                 <Link to="/:id"> Apple MacBook Pro 17"</Link>
               </th>
               <td className="px-6 py-4">Ariuka</td>
@@ -41,7 +47,9 @@ const Reviews = () => {
               <td className="px-6 py-4">Very Good</td>
               {userType === "admin" && (
                 <td className="px-6 py-4">
-                  <button to="" className="font-medium text-blue-600 mr-4 hover:underline">
+                  <button
+                    to=""
+                    className="font-medium text-blue-600 mr-4 hover:underline">
                     Delete
                   </button>
                 </td>
