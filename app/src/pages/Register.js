@@ -1,32 +1,71 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../components/controllers/customButton";
 
+import { useDispatch } from "react-redux";
+import { setLoading } from "./../redux/actions";
+
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [authType, setAuthType] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
 
-    // Implement login logic here (e.g., API call)
-    console.log("Login attempt:", username, password);
+    const data = {
+      email: email,
+      fullName: username,
+      password: password,
+      authtype: authType,
+    };
 
-    // Clear form after submission
+    try {
+      await axios.post("http://localhost:8080/signup", data);
+      alert("Registered successfully");
+      navigate("/login");
+      dispatch(setLoading(false));
+    } catch (err) {
+      console.error(err);
+      dispatch(setLoading(false));
+    }
+
     setUsername("");
     setPassword("");
+    setEmail("");
+    setAuthType("");
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
-        <div className="flex justify-center items-center mb-6">
-          <img className="w-20 h-20 rounded-full" src="./../../assets/images/cart.gif" alt="Walmart Logo" />
-        </div>
         <h3 className="text-2xl font-bold text-center">Register</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email">
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="text"
+              placeholder="Enter an email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mt-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username">
               Username
             </label>
             <input
@@ -40,7 +79,9 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password">
               Password
             </label>
             <input
@@ -54,7 +95,9 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password">
               User type
             </label>
             <div className="flex gap-4 items-center">
@@ -63,6 +106,8 @@ const Register = () => {
                 value="SELLER"
                 label="Seller"
                 name="authType"
+                checked={authType === "SELLER"}
+                onChange={(e) => setAuthType(e.target.value)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
               />
               <label for="seller">Seller</label>
@@ -70,6 +115,8 @@ const Register = () => {
                 type="radio"
                 value="BUYER"
                 name="authType"
+                checked={authType === "BUYER"}
+                onChange={(e) => setAuthType(e.target.value)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
               />
               <label for="buyer">Buyer</label>
@@ -77,12 +124,14 @@ const Register = () => {
           </div>
 
           <div className="flex items-center justify-center mt-6">
-            <CustomButton text="Register"></CustomButton>
+            <CustomButton text="Register" type="submit"></CustomButton>
           </div>
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
               Are you already?
-              <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/login">
+              <Link
+                className="text-blue-500 hover:text-blue-800 font-bold"
+                to="/login">
                 Login
               </Link>
             </p>
