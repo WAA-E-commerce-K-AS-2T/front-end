@@ -17,16 +17,16 @@ const ProductCard = ({
         <span className="text-sm font-bold text-gray-900">$ {price}</span>
         <span className="text-sm text-gray-700">{name}</span>
         <span className="text-xs text-gray-500">{description}</span>
-        <div className="flex items-center mt-2">
+        <span className="flex items-center mt-2">
           <span className="inline-flex text-[#000] mr-1">
             {" "}
-            {[...Array(Math.round(rating))].map((_, index) => (
+            {[...Array(Math.floor(rating))].map((_, index) => (
               <StarIcon
                 key={index}
                 className="w-4 h-4 text-yellow-500 flex-shrink-0"
               />
             ))}
-            {[...Array(5 - Math.round(rating))].map((_, index) => (
+            {[...Array(5 - Math.floor(rating))].map((_, index) => (
               <StarIcon
                 key={index}
                 className="w-4 h-4 text-gray-300 flex-shrink-0"
@@ -39,7 +39,7 @@ const ProductCard = ({
           <span className=" [clip:rect(1px_1px_1px_1px)!important] [clip-path:inset(50%)!important] !h-[1px] !overflow-hidden !p-0 !absolute !whitespace-nowrap !w-px">
             {rating} out of 5 Stars. {reviews} reviews
           </span>
-        </div>
+        </span>
       </div>
     </Link>
   );

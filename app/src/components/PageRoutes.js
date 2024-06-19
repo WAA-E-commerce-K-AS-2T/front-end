@@ -3,7 +3,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
-// import ProductDetails from "../pages/ProductDetails";
+import ProductDetails from "../pages/ProductDetails";
+import Products from "../pages/Products";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
 import Products from "../pages/seller/Products";
@@ -12,11 +13,15 @@ import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
 import ProductBuy from "../pages/Products";
 import AddProduct from "../pages/seller/addProduct";
+import ProductCart from "../pages/ProductCart";
+import ShippingForm from "./cartComponents/ShippingForm";
 
 const PageRoutes = (props) => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Products />} />
+      <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/register" element={<Register />} />
       <Route path="/products" element={<ProductBuy />} />
 
@@ -41,6 +46,18 @@ const PageRoutes = (props) => {
           />
         </Route>
 
+        <Route path="/profile/seller" />
+        <Route path="/cart" element={<ProductCart />} />
+
+        <Route
+          path=""
+          element={
+            <ProtectedRoutes>
+              <Route path="/cart" element={<Dashboard />} />
+              <Route path="/profile" />
+            </ProtectedRoutes>
+          }
+        />
         <Route path="/seller/*">
           <Route
             path="products"
@@ -84,7 +101,9 @@ const PageRoutes = (props) => {
             </ProtectedRoutes>
           }
         />
+        <Route path="/shipping" element={<ShippingForm />} />
       </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

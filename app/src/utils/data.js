@@ -166,3 +166,47 @@ export const productDetails = {
     },
   ],
 };
+export const productData = {
+  name: "Stylish Modern Chair",
+  price: 129.99,
+  description:
+    "A stylish and comfortable modern chair perfect for any living space.",
+  details:
+    "This modern chair is designed to add a touch of elegance and comfort to your home. It features a sturdy wooden frame and a soft cushioned seat, making it a perfect choice for any room.",
+  specifications: {
+    Weight: "15 lbs",
+    Dimensions: "30 x 25 x 35 inches",
+    Color: "Gray",
+    Material: "Fabric, Wood",
+    Brand: "HomeComfort",
+  },
+  colors: ["Gray", "Blue", "Black", "White"],
+  brands: ["HomeComfort", "LuxuryLiving", "CozyHome"],
+  materials: ["Fabric", "Leather", "Velvet"],
+  sizes: ["Small", "Medium", "Large"],
+  reviews: [
+    {
+      rating: 5,
+      contentSummary: "Excellent chair!",
+      content:
+        "This chair is incredibly comfortable and looks great in my living room. Highly recommend!",
+      date: "2023-05-12",
+      reviewer: "John Doe",
+    },
+    {
+      rating: 4,
+      contentSummary: "Very good",
+      content:
+        "The chair is very good, but the assembly instructions could be clearer.",
+      date: "2023-06-03",
+      reviewer: "Jane Smith",
+    },
+    {
+      rating: 3,
+      contentSummary: "Average",
+      content: "The chair is okay, but it didn't match the color I expected.",
+      date: "2023-04-21",
+      reviewer: "Emily Johnson",
+    },
+  ],
+};
