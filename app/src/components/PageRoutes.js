@@ -5,11 +5,12 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
-import AddProduct from "../pages/seller/AddProduct";
-import Products from "../pages/seller/Products";
+import AddProduct from "../pages/seller/products/AddProduct";
+import Products from "../pages/seller/products/Products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
+import EditProduct from "../pages/seller/products/EditProduct";
 
 const PageRoutes = (props) => {
   return (
@@ -67,6 +68,14 @@ const PageRoutes = (props) => {
             element={
               <ProtectedRoutes>
                 <AddProduct />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="editProduct/:id"
+            element={
+              <ProtectedRoutes>
+                <EditProduct />
               </ProtectedRoutes>
             }
           />

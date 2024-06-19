@@ -5,6 +5,7 @@ import Loader from "./components/controllers/Loader";
 import { useEffect } from "react";
 import { setUser } from "./redux/actions";
 import { decodeToken } from "./utils/token";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <Loader />
+      <Toaster position="top-center" reverseOrder={false} />
       <PageRoutes />
     </div>
   );
