@@ -12,6 +12,8 @@ import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
 import ProductDetails from "../pages/ProductDetails";
+import ShippingForm from "./cartComponents/ShippingForm";
+import ProductCart from "../pages/ProductCart";
 
 const PageRoutes = (props) => {
   return (
@@ -22,6 +24,9 @@ const PageRoutes = (props) => {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/" element={<ProductDetails />} />
+
+        <Route path="/shipping" element={<ShippingForm />} />
+        <Route path="/cart" element={<ProductCart />} />
         <Route path="/user/*">
           <Route
             path="dashboard"
