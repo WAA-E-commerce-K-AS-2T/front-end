@@ -20,10 +20,10 @@ const PageRoutes = (props) => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/products" element={<ProductBuy />} />
       <Route path="/product/:id" element={<ProductDetails />} />
 
       <Route element={<Layout />}>
+        <Route path="/products" element={<ProductBuy />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/user/*">
           <Route
