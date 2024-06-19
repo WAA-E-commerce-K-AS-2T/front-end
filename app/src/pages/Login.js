@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../components/controllers/customButton";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,16 +14,27 @@ const Login = () => {
     setPassword("");
   };
 
+  const handleOnClick = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
         <div className="flex justify-center items-center mb-6">
-          <img className="w-20 h-20 rounded-full" src="./../../assets/images/cart.gif" alt="Walmart Logo" />
+          <img
+            className="w-20 h-20 rounded-full"
+            src="./../../assets/images/cart.gif"
+            alt="Walmart Logo"
+          />
         </div>
         <h3 className="text-2xl font-bold text-center">Welcome!</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
               Username
             </label>
             <input
@@ -36,7 +48,10 @@ const Login = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -51,15 +66,21 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between mt-4">
             <CustomButton text="Login"></CustomButton>
-            <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/forgotpassword">
+            <Link
+              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              to="/forgotpassword"
+            >
               Forgot Password?
             </Link>
           </div>
         </form>
         <div className="mt-6 text-center">
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm" onClick={handleOnClick}>
             Don't have an account?{" "}
-            <Link className="text-blue-500 hover:text-blue-800 font-bold" href="/register">
+            <Link
+              className="text-blue-500 hover:text-blue-800 font-bold"
+              href="/register"
+            >
               Create an account
             </Link>
           </p>
