@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLoading } from "../../redux/action";
+import { setLoading } from "../../redux/actions";
 import axios from "axios";
 
 const AddProduct = () => {

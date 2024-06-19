@@ -1,26 +1,17 @@
-const initialLoggedIn = {
-  loggedIn: true,
-  //   loggedIn: localStorage.getItem("loggedIn") === "true",
+const initialUser = {
+  user: null,
 };
 
 const initialLoading = {
   isLoading: false,
-  //   loggedIn: localStorage.getItem("loggedIn") === "true",
 };
 
-export const authReducer = (state = initialLoggedIn, action) => {
+export const authReducer = (state = initialUser, action) => {
   switch (action.type) {
-    case "LOGIN":
-      localStorage.setItem("loggedIn", true);
+    case "SET_USER":
       return {
         ...state,
-        loggedIn: true,
-      };
-    case "LOGOUT":
-      localStorage.removeItem("loggedIn", true);
-      return {
-        ...state,
-        loggedIn: false,
+        user: action.payload,
       };
     default:
       return state;

@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoutes = ({ children }) => {
   const location = useLocation();
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const user = useSelector((state) => state.auth.user);
 
-  //   if (!loggedIn) {
-  //     return <Navigate to="/login" replace state={{ from: location }} />;
-  //   }
+  if (!user) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
   console.log("children");
 
   return children;
