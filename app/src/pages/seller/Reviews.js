@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
+import { useSelector } from "react-redux";
 
 const Reviews = () => {
+  const user = useSelector((state) => state.auth.user);
   const [purchases, setPurchases] = useState([{ product: "", username: "", rating: "", reviews: "" }]);
   const navigate = useNavigate();
-  const userType = "admin";
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
       <table className="w-full text-sm text-left rtl:text-right">
@@ -23,7 +25,7 @@ const Reviews = () => {
             <th scope="col" className="px-6 py-3">
               Review
             </th>
-            {userType === "admin" && (
+            {user.auth_type === "admin" && (
               <th scope="col" className="px-6 py-3">
                 Action
               </th>
@@ -39,7 +41,7 @@ const Reviews = () => {
               <td className="px-6 py-4">Ariuka</td>
               <td className="px-6 py-4">5</td>
               <td className="px-6 py-4">Very Good</td>
-              {userType === "admin" && (
+              {user.auth_type === "admin" && (
                 <td className="px-6 py-4">
                   <button to="" className="font-medium text-blue-600 mr-4 hover:underline">
                     Delete

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+import Login from "../pages/user/Login";
+import Register from "../pages/user/Register";
 import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/Dashboard";
@@ -9,8 +9,9 @@ import AddProduct from "../pages/seller/products/AddProduct";
 import Products from "../pages/seller/products/Products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
-import Profile from "../pages/buyer/Profile";
+import Profile from "../pages/user/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
+import EditProfile from "../pages/user/EditProfile";
 import ProductDetails from "../pages/ProductDetails";
 import ShippingForm from "./cartComponents/ShippingForm";
 import ProductCart from "../pages/ProductCart";
@@ -29,18 +30,18 @@ const PageRoutes = (props) => {
         <Route path="/cart" element={<ProductCart />} />
         <Route path="/user/*">
           <Route
-            path="dashboard"
-            element={
-              <ProtectedRoutes>
-                <Dashboard />
-              </ProtectedRoutes>
-            }
-          />
-          <Route
             path="profile"
             element={
               <ProtectedRoutes>
                 <Profile />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="editProfile"
+            element={
+              <ProtectedRoutes>
+                <EditProfile />
               </ProtectedRoutes>
             }
           />
@@ -89,7 +90,7 @@ const PageRoutes = (props) => {
           />
         </Route>
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <ProtectedRoutes>
               <Route path="/addItem" />

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../components/controllers/CustomButton";
+import CustomButton from "../../components/controllers/CustomButton";
 
 import { useDispatch } from "react-redux";
-import { setLoading } from "./../redux/actions";
+import { setLoading } from "../../redux/actions";
 import toast from "react-hot-toast";
 
 const Register = () => {
