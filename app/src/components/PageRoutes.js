@@ -11,7 +11,7 @@ import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import Profile from "../pages/buyer/Profile";
 import ProductBuy from "../pages/Products";
-import AddProduct from "../pages/seller/addProduct";
+import AddProduct from "../pages/seller/AddProduct";
 import ProductCart from "../pages/ProductCart";
 import ShippingForm from "./cartComponents/ShippingForm";
 

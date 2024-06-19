@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import CustomButton from "../../components/controllers/customButton";
+import CustomButton from "../../components/controllers/CustomButton";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/actions";
@@ -21,15 +21,11 @@ const AddProduct = () => {
     console.log(formData);
 
     try {
-      const response = await axios.post(
-        "https://api.example.com/products",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("https://api.example.com/products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log("Response:", response.data);
       // Handle success or redirect to another page
@@ -45,29 +41,16 @@ const AddProduct = () => {
   return (
     <>
       <p className="text-3xl text-left mx-24 my-8">Add product</p>
-      <form
-        className="customForm grid-cols-2 gap-8"
-        ref={formRef}
-        onSubmit={handleSubmit}>
+      <form className="customForm grid-cols-2 gap-8" ref={formRef} onSubmit={handleSubmit}>
         <div className="col-span-1">
           <div>
             <label htmlFor="username">Name</label>
-            <input
-              className="focus:outline-teal-500"
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Product name"
-              required
-            />
+            <input className="focus:outline-teal-500" id="username" name="username" type="text" placeholder="Product name" required />
           </div>
           <div className="mt-4">
             <label htmlFor="categories">Categories</label>
             <div className="flex gap-4">
-              <select
-                className="focus:ring-teal-500 focus:border-teal-500 focus:outline-teal-500"
-                name="category"
-                defaultValue={selectedCat}>
+              <select className="focus:ring-teal-500 focus:border-teal-500 focus:outline-teal-500" name="category" defaultValue={selectedCat}>
                 {categories.map((category, index) => (
                   <option key={index} value={category.name}>
                     {category.name || ""}
