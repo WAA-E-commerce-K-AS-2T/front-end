@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../components/controllers/customButton";
+import CustomButton from "../components/controllers/CustomButton";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoading, setUser } from "./../redux/actions";
@@ -48,9 +48,7 @@ const Login = () => {
         <h3 className="text-2xl font-bold text-center">Welcome!</h3>
         <form className="mt-4" onSubmit={login}>
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
               email
             </label>
             <input
@@ -64,9 +62,7 @@ const Login = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
@@ -86,9 +82,7 @@ const Login = () => {
         <div className="mt-6 text-center">
           <p className="text-gray-600 text-sm" onClick={handleOnClick}>
             Don't have an account?{" "}
-            <Link
-              className="text-blue-500 hover:text-blue-800 font-bold"
-              to="/register">
+            <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/register">
               Create an account
             </Link>
           </p>

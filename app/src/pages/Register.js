@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../components/controllers/customButton";
+import CustomButton from "../components/controllers/CustomButton";
 
 import { useDispatch } from "react-redux";
 import { setLoading } from "./../redux/actions";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,13 @@ const Register = () => {
 
     try {
       await axios.post("http://localhost:8080/signup", data);
-      alert("Registered successfully");
+      toast.success("Succesfully registered!");
+
       navigate("/login");
       dispatch(setLoading(false));
     } catch (err) {
-      console.error(err);
       dispatch(setLoading(false));
+      toast.error("Error!");
     }
 
     setUsername("");
@@ -47,9 +49,7 @@ const Register = () => {
         <h3 className="text-2xl font-bold text-center">Register</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
               Email
             </label>
             <input
@@ -63,9 +63,7 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Username
             </label>
             <input
@@ -79,9 +77,7 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
@@ -95,9 +91,7 @@ const Register = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               User type
             </label>
             <div className="flex gap-4 items-center">
@@ -129,9 +123,7 @@ const Register = () => {
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
               Are you already?
-              <Link
-                className="text-blue-500 hover:text-blue-800 font-bold"
-                to="/login">
+              <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/login">
                 Login
               </Link>
             </p>
