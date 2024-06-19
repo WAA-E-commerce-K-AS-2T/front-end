@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
-import { productData, productDetails } from "../utils/data";
-import OIP from "./../assets/images/OIP.png";
+import { productData, productDetails } from "../../utils/data";
+import OIP from "./../../assets/images/OIP.png";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../../components/Breadcrumb";
 
 const ProductDetails = () => {
   const { name, image, price, description, details, specifications, reviews } =

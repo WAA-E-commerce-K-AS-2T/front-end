@@ -3,7 +3,6 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
-import ProductDetails from "../pages/ProductDetails";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
 import Products from "../pages/seller/Products";
@@ -14,6 +13,7 @@ import ProductBuy from "../pages/Products";
 import AddProduct from "../pages/seller/addProduct";
 import ProductCart from "../pages/ProductCart";
 import ShippingForm from "./cartComponents/ShippingForm";
+import ProductDetails from "../pages/buyer/ProductDetails";
 
 const PageRoutes = (props) => {
   return (
