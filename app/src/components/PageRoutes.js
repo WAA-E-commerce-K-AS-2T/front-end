@@ -5,7 +5,11 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
-import AddProduct from "../pages/seller/addProduct";
+import AddProduct from "../pages/seller/AddProduct";
+import Products from "../pages/seller/Products";
+import Reviews from "../pages/seller/Reviews";
+import Orders from "../pages/seller/Orders";
+import Profile from "../pages/buyer/Profile";
 
 const PageRoutes = (props) => {
   return (
@@ -14,19 +18,58 @@ const PageRoutes = (props) => {
       <Route path="/register" element={<Register />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/profile/seller" />
-        <Route
-          path=""
-          element={
-            <ProtectedRoutes>
-              <Route path="/cart" element={<Dashboard />} />
-              <Route path="/profile" />
-            </ProtectedRoutes>
-          }
-        />
+        <Route path="/user/*">
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoutes>
+                <Profile />
+              </ProtectedRoutes>
+            }
+          />
+        </Route>
+
         <Route path="/seller/*">
-          <Route path="list" element={<AddProduct />} />
-          <Route path="addProduct" element={<AddProduct />} />
+          <Route
+            path="products"
+            element={
+              <ProtectedRoutes>
+                <Products />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="order"
+            element={
+              <ProtectedRoutes>
+                <Orders />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="reviews"
+            element={
+              <ProtectedRoutes>
+                <Reviews />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="addProduct"
+            element={
+              <ProtectedRoutes>
+                <AddProduct />
+              </ProtectedRoutes>
+            }
+          />
         </Route>
         <Route
           path="/admin"
