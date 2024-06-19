@@ -12,8 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const navigate = useNavigate();
-
   const login = (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
@@ -47,15 +45,11 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
-
-
         <h3 className="text-2xl font-bold text-center">Welcome!</h3>
         <form className="mt-4" onSubmit={login}>
           <div>
-
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
               email
-
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -68,10 +62,7 @@ const Login = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
