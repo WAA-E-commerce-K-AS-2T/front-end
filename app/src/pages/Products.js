@@ -2,7 +2,7 @@ import React from "react";
 
 import Product from "./Product";
 
-const Products = () => {
+const ProductBuy = () => {
   return (
     <div className="h-100 relative flex flex-col">
       <div className="container mx-auto ">
@@ -22,4 +22,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductBuy;
