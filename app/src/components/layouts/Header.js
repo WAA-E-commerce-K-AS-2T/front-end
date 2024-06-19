@@ -13,7 +13,6 @@ const Header = () => {
     { name: "Toys", sub: [{ name: "Ball" }] },
   ]);
   const [subOpen, setSubOpen] = useState(false);
-  const userType = "seller";
 
   const fetchCategories = () => {};
 
@@ -37,7 +36,7 @@ const Header = () => {
           </svg>
           {user ? (
             <Link className="cursor-pointer hover:underline" to="/user/profile">
-              {user.sub}
+              {user.fullName}
             </Link>
           ) : (
             <Link className="cursor-pointer hover:underline" to="/login">
@@ -46,7 +45,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      {userType === "buyer" && (
+      {!user || user.auth_type === "buyer" ? (
         <div className="flex justify-between h-18 items-center px-8 py-4 font-medium border-b-2 border-solid border-black">
           <div className="flex gap-12 items-center relative">
             {categories.map((i) => (
@@ -90,6 +89,8 @@ const Header = () => {
             </button>
           </div>
         </div>
+      ) : (
+        <></>
       )}
     </div>
   );
