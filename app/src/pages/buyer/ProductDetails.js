@@ -4,34 +4,37 @@ import { productData, productDetails } from "../../utils/data";
 import OIP from "./../../assets/images/OIP.png";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
 import Breadcrumb from "../../components/Breadcrumb";
+import ReviewModal from "../../components/product/ReviewModal";
 
 const ProductDetails = () => {
   const { name, image, price, description, details, specifications, reviews } =
     productDetails;
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [allReviews, setAllReviews] = useState(reviews);
+
   const averageRating =
-    reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+    allReviews.reduce((sum, review) => sum + review.rating, 0) /
+    allReviews.length;
+
+  const handleReviewSubmit = (review) => {
+    setAllReviews([
+      ...allReviews,
+      {
+        ...review,
+        date: new Date().toLocaleDateString(),
+        reviewer: "Anonymous",
+      },
+    ]);
+  };
 
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col lg:flex-row lg:space-x-8">
         {/* Left side: Breadcrumbs, image, and variant options */}
         <div className="flex-1 lg:w-1/4 flex flex-col">
-          {/* <nav className="text-sm text-gray-600 mb-4 flex-col">
-            <a href="/" className="hover:underline">
-              Home
-            </a>{" "}
-            &gt;
-            <a href="/category" className="hover:underline">
-              {" "}
-              Category
-            </a>{" "}
-            &gt;
-            <span> {name}</span>
-          </nav> */}
           <Breadcrumb />
-
           <div className="flex-1">
             <img src={OIP} alt={name} className="w-full h-auto mb-4 lg:mb-0" />
           </div>
@@ -155,7 +158,7 @@ const ProductDetails = () => {
                 <span className="text-xs">({averageRating.toFixed(1)})</span>
                 <span className="text-xs">
                   {" "}
-                  out of {reviews.length} reviews
+                  out of {allReviews.length} reviews
                 </span>
               </div>
             </div>
@@ -175,12 +178,6 @@ const ProductDetails = () => {
               onClick={() => setIsAboutCollapsed(!isAboutCollapsed)}>
               About this item
             </h2>
-            {/* {isAboutCollapsed ? (
-              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
-            ) : (
-              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
-            )} */}
-
             {!isAboutCollapsed && (
               <p className="text-sm text-gray-700 mb-4">{details}</p>
             )}
@@ -204,11 +201,11 @@ const ProductDetails = () => {
             )}
           </div>
           <h3 className="text-md font-semibold mb-2">Customer Reviews</h3>
-          {reviews.map((review, index) => (
+          {allReviews.map((review, index) => (
             <div
               key={index}
               className="mb-4 border border-gray-300 p-4 rounded-lg">
-              <div className="flex  justify-center">
+              <div className="flex justify-center">
                 {[...Array(review.rating)].map((_, i) => (
                   <StarIcon
                     key={i}
@@ -231,11 +228,18 @@ const ProductDetails = () => {
               </div>
             </div>
           ))}
-          <button className="bg-teal-500 text-gray-300 px-4 py-2 rounded-lg">
+          <button
+            onClick={() => setIsReviewModalOpen(true)}
+            className="bg-teal-500 text-white px-4 py-2 rounded-lg">
             Write a Review
           </button>
         </div>
       </div>
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        onSubmit={handleReviewSubmit}
+      />
     </div>
   );
 };
