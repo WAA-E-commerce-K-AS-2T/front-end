@@ -8,6 +8,8 @@ import Products from "../pages/Products";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
 import AddProduct from "../pages/seller/addProduct";
+import ProductCart from "../pages/ProductCart";
+import ShippingForm from "./cartComponents/ShippingForm";
 
 const PageRoutes = (props) => {
   return (
@@ -19,6 +21,8 @@ const PageRoutes = (props) => {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/profile/seller" />
+        <Route path="/cart" element={<ProductCart />} />
+
         <Route
           path=""
           element={
@@ -41,7 +45,9 @@ const PageRoutes = (props) => {
             </ProtectedRoutes>
           }
         />
+        <Route path="/shipping" element={<ShippingForm />} />
       </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
