@@ -25,7 +25,6 @@ const PageRoutes = (props) => {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/" element={<ProductDetails />} />
-
         <Route path="/shipping" element={<ShippingForm />} />
         <Route path="/cart" element={<ProductCart />} />
         <Route path="/user/*">
