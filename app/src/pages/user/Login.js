@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../components/controllers/CustomButton";
+import CustomButton from "../../components/controllers/CustomButton";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setLoading, setUser } from "./../redux/actions";
-import { decodeToken } from "../utils/token";
+import { setLoading, setUser } from "../../redux/actions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,20 +18,31 @@ const Login = () => {
       email: email,
       password: password,
     };
-    console.log(data);
-    axios.post("http://localhost:8080/login", data).then((response) => {
-      setLoading(false);
-      if (response.status === 200) {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-        const user = decodeToken(token);
-        console.log(user);
-        dispatch(setUser(user));
-        navigate("/");
-      } else {
-        alert("Error");
-      }
-    });
+    try {
+      axios.post("http://localhost:8080/login", data).then((response) => {
+        dispatch(setLoading(false));
+        if (response.status === 200) {
+          const { token, user } = response.data;
+          user.auth_type =
+            user.roles[0].name === "ROLE_SELLER"
+              ? "seller"
+              : user.roles[0].name === "ROLE_BUYER"
+              ? "buyer"
+              : user.roles[0].name === "ROLE_ADMIN"
+              ? "admin"
+              : "";
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+
+          dispatch(setUser(user));
+          navigate("/");
+        } else {
+          alert("Error");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     setEmail("");
     setPassword("");

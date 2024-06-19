@@ -4,19 +4,13 @@ import PageRoutes from "./components/PageRoutes";
 import Loader from "./components/controllers/Loader";
 import { useEffect } from "react";
 import { setUser } from "./redux/actions";
-import { decodeToken } from "./utils/token";
 import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const user = decodeToken(token);
-      console.log("user", user);
-      dispatch(setUser(user));
-    }
+    dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
   }, [dispatch]);
 
   return (
