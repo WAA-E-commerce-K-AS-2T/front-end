@@ -5,7 +5,7 @@ const Sidebar = () => {
   return (
     <div
       id="default-sidebar"
-      className=" top-0 left-0 z-40 w-64 h-screen border-black border-solid border-r-[1px]  transition-transform -translate-x-full sm:translate-x-0"
+      className="top-0 left-0 z-40 w-64 h-screen border-black border-solid border-r-[1px]  transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar">
       <div className="h-full px-3 py-4 overflow-y-auto">
         <ul className="space-y-2 font-medium">
