@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import CustomButton from "../components/controllers/customButton";
+import { Link, useNavigate } from "react-router-dom";
+import CustomButton from "../components/controllers/CustomButton";
+import logo from "../assets/images/logo_big.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
         <div className="flex justify-center items-center mb-6">
-          <img className="w-20 h-20 rounded-full" src="./../../assets/images/cart.gif" alt="Walmart Logo" />
+          <img className="w-24" src={logo} alt="logo" />
         </div>
         <h3 className="text-2xl font-bold text-center">Welcome!</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
@@ -49,17 +52,14 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex items-center justify-between mt-4">
-            <CustomButton text="Login"></CustomButton>
-            <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/forgotpassword">
-              Forgot Password?
-            </Link>
+          <div className="flex items-center justify-center mt-4">
+            <CustomButton text="Login" handleClick={() => navigate("/dashboard")}></CustomButton>
           </div>
         </form>
         <div className="mt-6 text-center">
           <p className="text-gray-600 text-sm">
             Don't have an account?{" "}
-            <Link className="text-blue-500 hover:text-blue-800 font-bold" href="/register">
+            <Link className="text-blue-500 hover:text-blue-800 font-bold" to="/register">
               Create an account
             </Link>
           </p>

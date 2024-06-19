@@ -5,7 +5,12 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
-import AddProduct from "../pages/seller/addProduct";
+import AddProduct from "../pages/seller/AddProduct";
+import Products from "../pages/seller/Products";
+import Sidebar from "./layouts/Sidebar";
+import Purchases from "../pages/seller/Orders";
+import Reviews from "../pages/seller/Reviews";
+import Orders from "../pages/seller/Orders";
 
 const PageRoutes = (props) => {
   return (
@@ -16,7 +21,7 @@ const PageRoutes = (props) => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/profile/seller" />
         <Route
-          path=""
+          path="/user/*"
           element={
             <ProtectedRoutes>
               <Route path="/cart" element={<Dashboard />} />
@@ -25,7 +30,9 @@ const PageRoutes = (props) => {
           }
         />
         <Route path="/seller/*">
-          <Route path="list" element={<AddProduct />} />
+          <Route path="products" element={<Products />} />
+          <Route path="order" element={<Orders />} />
+          <Route path="reviews" element={<Reviews />} />
           <Route path="addProduct" element={<AddProduct />} />
         </Route>
         <Route
@@ -37,8 +44,9 @@ const PageRoutes = (props) => {
             </ProtectedRoutes>
           }
         />
+
+        <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

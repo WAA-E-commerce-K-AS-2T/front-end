@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "../components/controllers/customButton";
+import CustomButton from "../components/controllers/CustomButton";
+import logo from "../assets/images/logo_big.png";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ const Register = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full max-w-md">
         <div className="flex justify-center items-center mb-6">
-          <img className="w-20 h-20 rounded-full" src="./../../assets/images/cart.gif" alt="Walmart Logo" />
+          <img className="w-24" src={logo} alt="logo" />
         </div>
         <h3 className="text-2xl font-bold text-center">Register</h3>
         <form className="mt-4" onSubmit={handleSubmit}>
