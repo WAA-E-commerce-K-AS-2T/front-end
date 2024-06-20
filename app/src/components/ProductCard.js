@@ -21,7 +21,7 @@ const ProductCard = ({
         <span className="text-xs text-gray-500">{description}</span>
         <span className="flex items-center mt-2">
           <span className="inline-flex text-[#000] mr-1">
-            {renderStars(reviews, "yellow")}
+            {renderStars(averageRating, "yellow")}
           </span>
           <span className="text-xs text-gray-500 ml-1 truncate">
             ({reviews ? reviews : "No reviews to show"})
