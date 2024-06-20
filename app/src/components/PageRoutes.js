@@ -3,10 +3,10 @@ import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
 import NotFound from "../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Dashboard from "../pages/Dashboard";
 import Layout from "./layouts/Layout";
 import AddProduct from "../pages/seller/products/AddProduct";
 import Products from "../pages/seller/products/Products";
+import AdminProducts from "../pages/admin/Products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
 import ProductCart from "../pages/buyer/ProductCart";
@@ -14,6 +14,7 @@ import Profile from "../pages/user/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
 import EditProfile from "../pages/user/EditProfile";
 import ShippingForm from "./cartComponents/ShippingForm";
+import SearchResult from "../pages/buyer/SearchResult";
 import ProductBuy from "../pages/buyer/ProductBuy";
 import ProductDetails from "../pages/buyer/ProductDetails";
 
@@ -26,9 +27,9 @@ const PageRoutes = (props) => {
       <Route element={<Layout />}>
         <Route path="/" element={<ProductBuy />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-
         <Route path="/shipping" element={<ShippingForm />} />
         <Route path="/cart" element={<ProductCart />} />
+        <Route path="/search" element={<SearchResult />} />
         <Route path="/user/*">
           <Route
             path="profile"
@@ -99,6 +100,16 @@ const PageRoutes = (props) => {
             </ProtectedRoutes>
           }
         />
+        <Route path="/admin/*">
+          <Route
+            path="products"
+            element={
+              <ProtectedRoutes>
+                <AdminProducts />
+              </ProtectedRoutes>
+            }
+          />
+        </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

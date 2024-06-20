@@ -1,34 +1,76 @@
-import React, { useState } from "react";
-import { StarIcon } from "@heroicons/react/solid";
-import { productData, productDetails } from "../../utils/data";
-import OIP from "./../../assets/images/OIP.png";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
+import React, { useEffect, useState } from "react";
+import { productData } from "../../utils/data";
 import Breadcrumb from "../../components/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
+import axios from "axios";
+import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { renderStars } from "../../utils/renderStars";
+import toast from "react-hot-toast";
 
-const ProductDetails = () => {
-  const { name, image, price, description, details, specifications, reviews } =
-    productDetails;
+const ProductDetails = (props) => {
+  const { id } = useParams();
+  const user = useSelector((state) => state.auth.user);
+
+  const [productDetails1, setProductDetails1] = useState({});
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [allReviews, setAllReviews] = useState(reviews);
+  const [allReviews, setAllReviews] = useState([]);
 
-  const averageRating =
-    allReviews.reduce((sum, review) => sum + review.rating, 0) /
-    allReviews.length;
-
-  const handleReviewSubmit = (review) => {
+  const handleReviewSubmit = async (review) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/products/${id}/reviews`,
+        { rating: review.rating, comment: review.reviewText }
+      );
+    } catch (error) {
+      console.log(error);
+    }
     setAllReviews([
-      ...allReviews,
+      ...productDetails1?.reviews,
       {
         ...review,
+        comment: review.reviewText,
         date: new Date().toLocaleDateString(),
-        reviewer: "Anonymous",
+        reviewer: user.fullName,
       },
     ]);
   };
 
+  const addToCart = async () => {
+    const token = localStorage.getItem("token");
+    const data = {
+      productId: id,
+      quantity: 1,
+    };
+    try {
+      axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Item added to cart");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/products/${id}`
+        );
+        setProductDetails1(response.data);
+        setAllReviews(response.data?.reviews);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    fetchProductDetails();
+  }, [id]);
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col lg:flex-row lg:space-x-8">
@@ -36,7 +78,12 @@ const ProductDetails = () => {
         <div className="flex-1 lg:w-1/4 flex flex-col">
           <Breadcrumb />
           <div className="flex-1">
-            <img src={OIP} alt={name} className="w-full h-auto mb-4 lg:mb-0" />
+            <img
+              src={productDetails1.productPhotos?.[0]?.imageUrl}
+              // src={OIP}
+              alt="image of product"
+              className="w-full h-auto mb-4 lg:mb-0"
+            />
           </div>
           <div className="flex-1">
             {/* Variant options */}
@@ -133,32 +180,22 @@ const ProductDetails = () => {
             <div className="box-border flex flex-row justify-between w-full">
               <div className="box-border mt-0 ml-4 mr-4">Name of seller</div>
             </div>
-            <h1 className="text-2xl font-bold mb-2">{name}</h1>
+            <h1 className="text-2xl font-bold mb-2">{productDetails1?.name}</h1>
             <div className="text-lg font-semibold text-gray-900 mb-2">
-              ${price}
+              ${productDetails1?.price}
             </div>
             <div className="box-border flex flex-wrap h-auto pb-3">
               <div className="flex items-center justify-center w-full">
                 <span
                   className="inline-flex mr-1 text-black"
                   itemProp="ratingValue">
-                  {[...Array(Math.round(averageRating))].map((_, i) => (
-                    <StarIcon
-                      key={i}
-                      className="w-4 h-4 text-black-500 flex-shrink-0"
-                    />
-                  ))}
-                  {[...Array(5 - Math.round(averageRating))].map((_, i) => (
-                    <StarIcon
-                      key={i}
-                      className="w-4 h-4 text-gray-300 flex-shrink-0"
-                    />
-                  ))}
+                  {renderStars(productDetails1?.averageRating, "black")}
                 </span>
-                <span className="text-xs">({averageRating.toFixed(1)})</span>
                 <span className="text-xs">
-                  {" "}
-                  out of {allReviews.length} reviews
+                  {/* {productDetails1?.averageRating.toFixed(1)} */}
+                </span>
+                <span className="text-xs">
+                  &nbsp; out of {productDetails1.totalReviews} reviews
                 </span>
               </div>
             </div>
@@ -167,8 +204,10 @@ const ProductDetails = () => {
               Add to Cart
             </button>
 
-            {/* Description in bordered box */}
-            <p className="text-sm text-gray-700">{description}</p>
+            {/* Description in bordered box
+            <p className="text-sm text-gray-700">
+              {productDetails1.description}
+            </p> */}
           </div>
 
           {/* About this item section */}
@@ -179,7 +218,9 @@ const ProductDetails = () => {
               About this item
             </h2>
             {!isAboutCollapsed && (
-              <p className="text-sm text-gray-700 mb-4">{details}</p>
+              <p className="text-sm text-gray-700 mb-4">
+                {productDetails1.description}
+              </p>
             )}
 
             <hr className="border-t border-gray-300 my-4" />
@@ -191,40 +232,46 @@ const ProductDetails = () => {
             </h3>
             {!isSpecsCollapsed && (
               <ul className="list-disc list-inside text-sm text-gray-700 mb-4">
-                {Object.entries(specifications).map(([key, value]) => (
+                {/* {Object.entries(specifications).map(([key, value]) => (
                   <li key={key}>
                     <strong>{key}: </strong>
                     {value}
                   </li>
-                ))}
+
+                ))} */}
+                <li>
+                  <span className="text-md font-bold">Color: </span>
+                  {productDetails1.color}
+                </li>
+                <li>
+                  <span className="text-md font-bold">Material: </span>
+                  {productDetails1.material}
+                </li>
+                <li>
+                  <span className="text-md font-bold">Size: </span>
+                  {productDetails1.productSize}
+                </li>
+                <li>
+                  <span className="text-md font-bold">Brand: </span>
+                  {productDetails1.brand}
+                </li>
               </ul>
             )}
           </div>
           <h3 className="text-md font-semibold mb-2">Customer Reviews</h3>
-          {allReviews.map((review, index) => (
+          {allReviews?.map((review, index) => (
             <div
               key={index}
               className="mb-4 border border-gray-300 p-4 rounded-lg">
               <div className="flex justify-center">
-                {[...Array(review.rating)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className="w-4 h-4 text-yellow-500 flex-shrink-0"
-                  />
-                ))}
-                {[...Array(5 - review.rating)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className="w-4 h-4 text-gray-300 flex-shrink-0"
-                  />
-                ))}
+                {renderStars(review?.rating, "yellow")}
               </div>
-              <div className="text-sm font-semibold text-gray-900">
-                {review.contentSummary}
-              </div>
-              <div className="text-sm text-gray-700">{review.content}</div>
+              {/* <div className="text-sm font-semibold text-gray-900">
+                {review.comment}
+              </div> */}
+              <div className="text-sm text-gray-700">{review.comment}</div>
               <div className="text-xs text-gray-500">
-                {review.date} by {review.reviewer}
+                {review.createdDate} by {review.createdBy}
               </div>
             </div>
           ))}

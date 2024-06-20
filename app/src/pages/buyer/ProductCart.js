@@ -3,9 +3,13 @@ import Breadcrumb from "../../components/Breadcrumb";
 import CartItemsList from "../../components/cartComponents/CartItemsList";
 import OrderSummary from "../../components/cartComponents/OrderSummary";
 import CustomButton from "../../components/controllers/CustomButton";
+import axios from "axios";
+import { useEffect } from "react";
 
 const ProductCart = () => {
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [isChanging, setIsChanging] = useState(false);
 
   const handleBuyClick = () => {
     setIsSummaryVisible(true);
@@ -13,6 +17,19 @@ const ProductCart = () => {
 
   const handleCheckout = () => {
     setIsSummaryVisible(true);
+  };
+
+  const getUserCart = () => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .get("http://localhost:8080/api/v1/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setCart(res.data))
+      .catch((err) => console.log(err));
   };
 
   const handleDownloadReceipt = () => {
@@ -26,17 +43,61 @@ const ProductCart = () => {
     URL.revokeObjectURL(url);
   };
 
-  const handleRemove = (id) => {
-    // Handle item removal
+  const handleRemove = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/v1/cart/cartItems/product/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsChanging(!isChanging);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleIncrement = (id) => {
-    // Handle increment
+  const handleIncrement = async (id) => {
+    const token = localStorage.getItem("token");
+    const data = {
+      productId: id,
+      quantity: 1,
+    };
+    try {
+      await axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setIsChanging(!isChanging);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleDecrement = (id) => {
-    // Handle decrement
+  const handleDecrement = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/v1/cart/cartItems/product/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsChanging(!isChanging);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    getUserCart();
+  }, [isChanging]);
 
   return (
     <div className="container p-4">
@@ -47,7 +108,7 @@ const ProductCart = () => {
             Your Cart items
           </h2>
           <CartItemsList
-            cartItems={cartItems}
+            cartItems={cart?.items}
             handleIncrement={handleIncrement}
             handleDecrement={handleDecrement}
             handleRemove={handleRemove}
@@ -61,7 +122,10 @@ const ProductCart = () => {
             </div>
           )}
         </div>
-        <OrderSummary handleBuyClick={handleBuyClick} />
+        <OrderSummary
+          total={cart?.totalPrice}
+          handleBuyClick={handleBuyClick}
+        />
       </div>
     </div>
   );

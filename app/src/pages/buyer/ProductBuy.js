@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import axios from "axios";
 import Product from "../../components/Product";
 
 const ProductBuy = () => {
+  const [products, setProducts] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/products`
+        );
+        // console.log("products fetched from server", response.data);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  console.log({ products });
+
+  if (!products) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="h-100 relative flex flex-col">
       <div className="container mx-auto ">
-        <Product />
+        <Product products={products} />
       </div>{" "}
       <div className="flex justify-center bottom-4 mt-4 right-4">
         {/* Pagination component */}
