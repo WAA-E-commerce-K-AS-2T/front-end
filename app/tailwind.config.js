@@ -8,10 +8,9 @@ module.exports = {
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
-      emerald: colors.emerald,
-      indigo: colors.indigo,
-      yellow: colors.yellow,
+      orange: colors.orange,
       teal: colors.teal,
+      red: colors.red,
     },
     extend: {
       transitionProperty: {

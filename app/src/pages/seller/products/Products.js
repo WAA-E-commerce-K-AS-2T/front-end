@@ -31,6 +31,7 @@ const Products = () => {
     axios.delete("http://localhost:8080/api/v1/products/" + id).then((response) => {
       dispatch(setLoading(false));
       toast.success("Succesfully deleted!");
+      fetchData();
     });
   };
 
@@ -106,7 +107,18 @@ const Products = () => {
               <td className="px-6 py-4">{item.color}</td>
               <td className="px-6 py-4">{item.productSize}</td>
               <td className="px-6 py-4">{item.material}</td>
-              <td className="px-6 py-4 text-teal-500">Approved</td>
+              <td
+                className={`px-6 py-4 font-semibold ${
+                  item.productStatus === "Approved"
+                    ? "text-teal-500"
+                    : item.productStatus === "Rejected"
+                    ? "text-red-500"
+                    : item.productStatus === "In review"
+                    ? "text-orange-500"
+                    : ""
+                }`}>
+                {item.productStatus}
+              </td>
               <td className="px-6 py-4">
                 <Link to={`/seller/editProduct/${item.id}`} className="font-medium text-blue-600 mr-4 hover:underline">
                   Edit

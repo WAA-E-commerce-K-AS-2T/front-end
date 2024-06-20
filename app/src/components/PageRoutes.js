@@ -7,7 +7,7 @@ import Layout from "./layouts/Layout";
 import AddProduct from "../pages/seller/products/AddProduct";
 import Products from "../pages/seller/products/Products";
 import AdminProducts from "../pages/admin/Products";
-import Reviews from "../pages/seller/Reviews";
+import Reviews from "../pages/admin/Reviews";
 import Orders from "../pages/seller/Orders";
 import ProductCart from "../pages/buyer/ProductCart";
 import Profile from "../pages/user/Profile";
@@ -115,6 +115,14 @@ const PageRoutes = (props) => {
             element={
               <ProtectedRoutes>
                 <AdminProducts />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="review"
+            element={
+              <ProtectedRoutes>
+                <Reviews />
               </ProtectedRoutes>
             }
           />

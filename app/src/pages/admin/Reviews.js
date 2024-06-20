@@ -8,14 +8,14 @@ import { setLoading } from "../../redux/actions";
 
 const Reviews = () => {
   const user = useSelector((state) => state.auth.user);
+  const token = localStorage.getItem("token");
   const [reviews, setReviews] = useState([{ product: "", username: "", rating: "", reviews: "" }]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const fetchReview = () => {
     dispatch(setLoading(true));
     axios
-      .get("http://localhost:8080/api/v1/review")
+      .get("http://localhost:8080/api/v1/review", { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
         setReviews(response.data);
       })
@@ -25,8 +25,9 @@ const Reviews = () => {
   };
 
   const deleteReview = (id) => {
-    axios.delete("http://localhost:8080/api/v1/review/" + id).then((response) => {
+    axios.delete(`http://localhost:8080/api/v1/review/${id}`, { headers: { authorization: `Bearer ${token}` } }).then((response) => {
       toast.success("Deleted review!");
+      fetchReview();
     });
   };
 
