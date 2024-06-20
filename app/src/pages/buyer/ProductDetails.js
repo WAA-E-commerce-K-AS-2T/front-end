@@ -200,7 +200,9 @@ const ProductDetails = (props) => {
               </div>
             </div>
 
-            <button className="bg-black text-white px-4 py-2 rounded-lg mb-4">
+            <button
+              className="bg-black text-white px-4 py-2 rounded-lg mb-4"
+              onClick={addToCart}>
               Add to Cart
             </button>
 
