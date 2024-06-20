@@ -13,6 +13,11 @@ module.exports = {
       yellow: colors.yellow,
       teal: colors.teal,
     },
+    extend: {
+      transitionProperty: {
+        height: "height",
+      },
+    },
   },
   plugins: [],
 };

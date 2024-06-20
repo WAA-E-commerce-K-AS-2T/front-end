@@ -8,7 +8,7 @@ const Layout = () => {
   const user = useSelector((state) => state.auth.user);
   return (
     <>
-      {user && user.auth_type === "buyer" ? (
+      {!user || user.auth_type === "buyer" ? (
         <div>
           {" "}
           <Header />

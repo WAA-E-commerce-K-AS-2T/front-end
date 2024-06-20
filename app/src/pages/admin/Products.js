@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../../../components/controllers/CustomButton";
+
 import { useDispatch } from "react-redux";
-import { setLoading } from "../../../redux/actions";
+
 import axios from "axios";
 import toast from "react-hot-toast";
+import { setLoading } from "../../redux/actions";
+import CustomButton from "../../components/controllers/CustomButton";
 
-const Products = () => {
+const AdminProducts = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    { id: 1, name: "Apple MacBook Pro 17", category: "electronics", price: 1000, inStock: 0, size: "", material: "" },
+  ]);
   const [categories, setCategories] = useState([]);
-
-  const navigate = useNavigate();
 
   const fetchData = () => {
     dispatch(setLoading(true));
     try {
       axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
         dispatch(setLoading(false));
-        console.log(response.data.content);
+        console.log("content", response.data.content);
         setProducts(response.data.content);
       });
     } catch (e) {
@@ -26,12 +27,9 @@ const Products = () => {
       toast.error("Error!");
     }
   };
-  const deleteItem = (id) => {
-    dispatch(setLoading(true));
-    axios.delete("http://localhost:8080/api/v1/products/" + id).then((response) => {
-      dispatch(setLoading(false));
-      toast.success("Succesfully deleted!");
-    });
+
+  const handleApprove = (value) => {
+    console.log(value);
   };
 
   const getAllCategory = async () => {
@@ -47,16 +45,10 @@ const Products = () => {
     fetchData();
     getAllCategory();
   }, []);
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
-      <div className="text-right mb-4">
-        <CustomButton
-          text="+ Add Product"
-          handleClick={() => {
-            navigate("/seller/addProduct");
-          }}
-        />
-      </div>
+      <div className="text-right mb-4"></div>
       <table className="w-full text-sm text-left rtl:text-right">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
@@ -96,24 +88,16 @@ const Products = () => {
               <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                 {item.name}
               </th>
-              <td className="px-6 py-4">
-                {categories.filter((i) => item.categoryIds.includes(i.id)).length > 0
-                  ? categories.filter((i) => item.categoryIds.includes(i.id))[0].name
-                  : ""}
-              </td>
+              <td className="px-6 py-4">{categories.filter((i) => i.id === item.category)[0].name || ""}</td>
               <td className="px-6 py-4">{item.price}</td>
               <td className="px-6 py-4">{item.inStock}</td>
               <td className="px-6 py-4">{item.color}</td>
-              <td className="px-6 py-4">{item.productSize}</td>
+              <td className="px-6 py-4">{item.size}</td>
               <td className="px-6 py-4">{item.material}</td>
-              <td className="px-6 py-4 text-teal-500">Approved</td>
-              <td className="px-6 py-4">
-                <Link to={`/seller/editProduct/${item.id}`} className="font-medium text-blue-600 mr-4 hover:underline">
-                  Edit
-                </Link>
-                <button className="font-medium text-blue-600  hover:underline" onClick={() => deleteItem(item.id)}>
-                  Delete
-                </button>
+              <td className="px-6 py-4 text-teal-500 font-semibold">Approved</td>
+              <td className="px-6 py-4 flex gap-2">
+                <CustomButton text="Reject" handleClick={handleApprove(false)} />
+                <CustomButton text="Approve" handleClick={handleApprove(true)} />
               </td>
             </tr>
           ))}
@@ -122,4 +106,4 @@ const Products = () => {
     </div>
   );
 };
-export default Products;
+export default AdminProducts;
