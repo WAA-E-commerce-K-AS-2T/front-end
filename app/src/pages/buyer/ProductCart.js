@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import CartItemsList from "../../components/cartComponents/CartItemsList";
 import OrderSummary from "../../components/cartComponents/OrderSummary";
 import CustomButton from "../../components/controllers/CustomButton";
@@ -88,11 +88,11 @@ const ProductCart = () => {
   }, [isChanging]);
 
   return (
-    <div className='container p-4'>
+    <div className="container p-4">
       <Breadcrumb />
-      <div className='flex flex-col lg:flex-row lg:space-x-8'>
-        <div className='lg:w-2/3'>
-          <h2 className='text-lg text-left font-medium text-gray-900 p-2 mb-4'>
+      <div className="flex flex-col lg:flex-row lg:space-x-8">
+        <div className="lg:w-2/3">
+          <h2 className="text-lg text-left font-medium text-gray-900 p-2 mb-4">
             Your Cart items
           </h2>
           <CartItemsList

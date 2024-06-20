@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import "./App.css";
-import PageRoutes from "./components/PageRoutes";
+import PageRoutes from "./components/common/PageRoutes";
 import Loader from "./components/controllers/Loader";
 import { useEffect } from "react";
 import { setUser } from "./redux/actions";

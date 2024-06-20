@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { productData } from "../../utils/data";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
 import axios from "axios";
 import { useParams } from "react-router";
@@ -10,8 +10,7 @@ import toast from "react-hot-toast";
 
 const ProductDetails = (props) => {
   const { id } = useParams();
-  const { fullName, auth_type } = useSelector((state) => state.auth.user);
-
+  const user = useSelector((state) => state.auth.user);
   const [productDetails1, setProductDetails1] = useState({});
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
@@ -30,7 +29,7 @@ const ProductDetails = (props) => {
           rating: review.rating,
           comment: review.reviewText,
           createdDate: new Date().toLocaleDateString(),
-          createdBy: fullName,
+          createdBy: user?.fullName,
         },
       ]);
       toast.success("Review submitted successfully");
@@ -130,7 +129,7 @@ const ProductDetails = (props) => {
                 </span>
               </div>
             </div>
-            {auth_type === "buyer" ? (
+            {user?.auth_type === "buyer" ? (
               <button
                 className="bg-black text-white px-6 py-3 rounded-lg mb-4 text-lg"
                 onClick={addToCart}>
@@ -202,7 +201,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
           ))}
-          {auth_type === "buyer" ? (
+          {user?.auth_type === "buyer" ? (
             <button
               onClick={() => setIsReviewModalOpen(true)}
               className="bg-black text-white px-6 py-3 rounded-lg mr-4 hover:bg-teal-500 hover:text-black hover:border-2 hover:border-gray-500">

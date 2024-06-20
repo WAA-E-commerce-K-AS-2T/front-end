@@ -1,7 +1,7 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import { renderStars } from "../utils/renderStars";
+import { renderStars } from "../../utils/renderStars";
 const ProductCard = ({
   id,
   image,

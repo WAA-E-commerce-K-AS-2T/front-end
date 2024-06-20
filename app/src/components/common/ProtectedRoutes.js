@@ -15,7 +15,7 @@ const ProtectedRoutes = ({ children }) => {
   }, [isLoading]);
 
   if (isChecking) {
-    return <div>Loading...</div>; // Replace with your full-screen loader component if needed
+    return <div>Loading...</div>;
   }
 
   if (!user) {

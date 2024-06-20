@@ -1,23 +1,23 @@
 import { Route, Routes } from "react-router";
-import Login from "../pages/user/Login";
-import Register from "../pages/user/Register";
-import NotFound from "../pages/NotFound";
+import Login from "../../pages/user/Login";
+import Register from "../../pages/user/Register";
+import NotFound from "../../pages/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Layout from "./layouts/Layout";
-import AddProduct from "../pages/seller/products/AddProduct";
-import Products from "../pages/seller/products/Products";
-import AdminProducts from "../pages/admin/Products";
-import Reviews from "../pages/admin/Reviews";
-import Orders from "../pages/seller/Orders";
-import ProductCart from "../pages/buyer/ProductCart";
-import Profile from "../pages/user/Profile";
-import EditProduct from "../pages/seller/products/EditProduct";
-import EditProfile from "../pages/user/EditProfile";
-import ShippingForm from "./cartComponents/ShippingForm";
-import SearchResult from "../pages/buyer/SearchResult";
-import ProductBuy from "../pages/buyer/ProductBuy";
-import ProductDetails from "../pages/buyer/ProductDetails";
-import OrderHistory from "./cartComponents/OrderHistory";
+import Layout from "../layouts/Layout";
+import AddProduct from "../../pages/seller/products/AddProduct";
+import Products from "../../pages/seller/products/Products";
+import AdminProducts from "../../pages/admin/Products";
+import Reviews from "../../pages/admin/Reviews";
+import Orders from "../../pages/seller/Orders";
+import ProductCart from "../../pages/buyer/ProductCart";
+import Profile from "../../pages/user/Profile";
+import EditProduct from "../../pages/seller/products/EditProduct";
+import EditProfile from "../../pages/user/EditProfile";
+import ShippingForm from "../cartComponents/ShippingForm";
+import SearchResult from "../../pages/buyer/SearchResult";
+import ProductBuy from "../../pages/buyer/ProductBuy";
+import ProductDetails from "../../pages/buyer/ProductDetails";
+import OrderHistory from "../cartComponents/OrderHistory";
 
 const PageRoutes = (props) => {
   return (
