@@ -28,14 +28,15 @@ const Login = () => {
               ? "seller"
               : user.roles[0].name === "ROLE_BUYER"
               ? "buyer"
-              : user.roles[0].name === "ROLE_ADMIN"
+              : user.roles[0].name === "ROLE_SYSTADM"
               ? "admin"
               : "";
           localStorage.setItem("token", token);
           localStorage.setItem("user", JSON.stringify(user));
 
           dispatch(setUser(user));
-          navigate("/");
+
+          navigate(user.auth_type === "admin" ? "/admin/products" : user.auth_type === "seller" ? "/seller/products" : "/");
         } else {
           alert("Error");
         }

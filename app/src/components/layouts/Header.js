@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import cart from "./../../assets/images/cart.gif";
+import list from "./../../assets/images/list_icon.gif";
 import logo from "./../../assets/images/logo_big.png";
 import { useSelector } from "react-redux";
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   console.log(user);
 
   const [categories, setCategories] = useState([
@@ -13,11 +15,23 @@ const Header = () => {
     { name: "Toys", sub: [{ name: "Ball" }] },
   ]);
   const [subOpen, setSubOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const fetchCategories = () => {};
 
   const handleOpen = () => {
     setSubOpen(true);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // navigate("/search");
+      navigate("/search?name=" + inputValue);
+    }
+  };
+
+  const handleChangeInput = (event) => {
+    setInputValue(event.target.value);
   };
 
   return (
@@ -80,12 +94,17 @@ const Header = () => {
               </button>
               <input
                 placeholder="Search items ..."
+                onChange={handleChangeInput}
+                onKeyDown={handleKeyDown}
                 className={`focus:ring-teal-500 focus:border-teal-500 focus:outline-teal-500 shadow appearance-none border rounded w-48 md:w-72 py-2 px-3 pl-12 text-gray-700 leading-tight`}
               />
             </div>
             <button className="relative cursor-pointer">
               <img src={cart} alt="cart" className="h-9 w-9" />
               <span className="absolute bg-yellow-500 rounded-full h-4 w-4 top-0 right-0 text-xs flex items-center justify-center text-white">5</span>
+            </button>
+            <button className="relative cursor-pointer">
+              <img src={list} alt="list" className="h-8 w-8" />
             </button>
           </div>
         </div>

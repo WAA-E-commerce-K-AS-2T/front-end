@@ -10,6 +10,7 @@ const Profile = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     dispatch(setUser(null));
   };
   return (
