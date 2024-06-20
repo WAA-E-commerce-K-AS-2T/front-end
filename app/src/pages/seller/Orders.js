@@ -20,15 +20,7 @@ const Orders = () => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(products);
-  products?.forEach((element) => {
-    console.log(element.amount, element.status);
-    element.orderItems.forEach((orderItem) => {
-      console.log(orderItem.product.name);
-      console.log(orderItem.product.price);
-      console.log(orderItem.quantity);
-    });
-  });
+  const handleStatus = (id) => {};
 
   useEffect(() => {
     getOrderHistory();
@@ -67,17 +59,28 @@ const Orders = () => {
         <tbody>
           {products.map((item) => (
             <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
-              <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
-                <Link to="/:id"> item?.</Link>
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4">10</td>
-              <td className="px-6 py-4 text-teal-500">Shipped</td>
+              <td className="px-6 py-4">{item.name}</td>
+              <td className="px-6 py-4">{item.color}</td>
+              <td className="px-6 py-4">{item?.categoryIds || ""}</td>
+              <td className="px-6 py-4">${item.price}</td>
+              <td className="px-6 py-4">{item.quantity}</td>
+              <td
+                className={`px-6 py-4 font-semibold ${
+                  item.productStatus === "shipped"
+                    ? "text-teal-500"
+                    : item.productStatus === "Rejected"
+                    ? "text-red-500"
+                    : item.productStatus === "In review"
+                    ? "text-orange-500"
+                    : ""
+                }`}>
+                {item.productStatus}
+              </td>
               <td className="px-6 py-4">
                 <Link to="" className="font-medium text-blue-600 mr-4 hover:underline">
-                  Edit
+                  <td className="px-6 py-4 flex gap-2">
+                    <CustomButton text="Save" handleClick={() => handleStatus(item.id)} />
+                  </td>
                 </Link>
               </td>
             </tr>
