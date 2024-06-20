@@ -9,7 +9,7 @@ const OrderHistory = () => {
 
       {orderHistoryData.map((order) => (
         <div key={order.id} className="border rounded-lg mb-4 shadow-md">
-          <div className="bg-gray-500 p-4 rounded-t-lg text-white">
+          <div className="bg-teal-700 p-4 rounded-t-lg text-white">
             <div className="flex justify-evenly mb-2">
               <div className="flex flex-col">
                 <div className="flex items-center text-lg font-semibold">
@@ -65,12 +65,12 @@ const OrderHistory = () => {
               <div className="mt-4 flex justify-end space-x-4">
                 <button
                   onClick={() => {}}
-                  className="px-4 m-4 text-sm font-medium text-gray-600 bg-white border-2 rounded-md hover:bg-gray-300">
-                  Cancel
+                  className="px-4 m-4 text-sm font-medium text-gray-700 bg-white border-2 border-gray-700 rounded-md hover:bg-gray-300">
+                  Cancel Order
                 </button>
                 <button
                   onClick={() => {}}
-                  className="px-4 m-4 text-sm font-medium text-white bg-black rounded-md hover:bg-gray-700">
+                  className="px-4 m-4 text-sm font-medium text-white bg-black rounded-md hover:bg-teal-700 ">
                   Download Receipt
                 </button>
               </div>

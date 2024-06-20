@@ -47,7 +47,9 @@ const Header = () => {
   }, []);
 
   const onClickHistory = () => {
-    navigate("/user/order");
+    navigate("/order");
+
+    if (user.auth_type === "seller") navigate("/user/order");
   };
 
   return (
@@ -57,7 +59,13 @@ const Header = () => {
           <img className="h-10" alt="logo" src={logo} />
         </Link>
         <div className="flex gap-2 items-between shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="black"
+            className="size-6">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -80,15 +88,30 @@ const Header = () => {
           <div className="flex gap-12 items-center relative">
             {categories.map((i) => (
               <div className="relative">
-                <Link className="hover:underline text-black cursor-pointer" to="">
+                <Link
+                  className="hover:underline text-black cursor-pointer"
+                  to="">
                   {i.name}
                   <button className="border-none" onClick={() => handleOpen()}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-3 ml-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="black"
+                      className="size-3 ml-4">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                      />
                     </svg>
                   </button>
                 </Link>
-                <div className={`absolute top-4 ${subOpen ? "display" : "none"} shadow-sm p-6`}>
+                <div
+                  className={`absolute top-4 ${
+                    subOpen ? "display" : "none"
+                  } shadow-sm p-6`}>
                   {i.sub &&
                     i.sub.map((j) => {
                       <Link>{j.name}</Link>;
@@ -100,7 +123,13 @@ const Header = () => {
           <div className="flex gap-4 items-center">
             <div className="relative">
               <button className="border-none absolute top-2 left-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="black"
+                  className="size-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -117,9 +146,13 @@ const Header = () => {
             </div>
             <button className="relative cursor-pointer" onClick={onClickCart}>
               <img src={cart} alt="cart" className="h-9 w-9" />
-              <span className="absolute bg-yellow-500 rounded-full h-4 w-4 top-0 right-0 text-xs flex items-center justify-center text-white">5</span>
+              <span className="absolute bg-yellow-500 rounded-full h-4 w-4 top-0 right-0 text-xs flex items-center justify-center text-white">
+                5
+              </span>
             </button>
-            <button className="relative cursor-pointer" onClick={onClickHistory}>
+            <button
+              className="relative cursor-pointer"
+              onClick={onClickHistory}>
               <img src={list} alt="list" className="h-8 w-8" />
             </button>
           </div>
