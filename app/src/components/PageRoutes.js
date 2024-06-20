@@ -21,18 +21,19 @@ import ProductDetails from "../pages/buyer/ProductDetails";
 const PageRoutes = (props) => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
 
       <Route element={<Layout />}>
-        <Route path="/" element={<ProductBuy />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/shipping" element={<ShippingForm />} />
-        <Route path="/cart" element={<ProductCart />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="/user/*">
+        <Route path='/' element={<ProductBuy />} />
+        <Route path='/product/:id' element={<ProductDetails />} />
+        <Route path='/shipping' element={<ShippingForm />} />
+        <Route path='/cart' element={<ProductCart />} />
+        <Route path='/search' element={<SearchResult />} />
+        {/* <Route path='/order' element={<Orders />} /> */}
+        <Route path='/user/*'>
           <Route
-            path="profile"
+            path='profile'
             element={
               <ProtectedRoutes>
                 <Profile />
@@ -40,18 +41,26 @@ const PageRoutes = (props) => {
             }
           />
           <Route
-            path="editProfile"
+            path='editProfile'
             element={
               <ProtectedRoutes>
                 <EditProfile />
               </ProtectedRoutes>
             }
           />
+          <Route
+            path='order'
+            element={
+              <ProtectedRoutes>
+                <Orders />
+              </ProtectedRoutes>
+            }
+          />
         </Route>
 
-        <Route path="/seller/*">
+        <Route path='/seller/*'>
           <Route
-            path="products"
+            path='products'
             element={
               <ProtectedRoutes>
                 <Products />
@@ -59,7 +68,7 @@ const PageRoutes = (props) => {
             }
           />
           <Route
-            path="order"
+            path='order'
             element={
               <ProtectedRoutes>
                 <Orders />
@@ -67,7 +76,7 @@ const PageRoutes = (props) => {
             }
           />
           <Route
-            path="reviews"
+            path='reviews'
             element={
               <ProtectedRoutes>
                 <Reviews />
@@ -75,7 +84,7 @@ const PageRoutes = (props) => {
             }
           />
           <Route
-            path="addProduct"
+            path='addProduct'
             element={
               <ProtectedRoutes>
                 <AddProduct />
@@ -83,7 +92,7 @@ const PageRoutes = (props) => {
             }
           />
           <Route
-            path="editProduct/:id"
+            path='editProduct/:id'
             element={
               <ProtectedRoutes>
                 <EditProduct />
@@ -92,17 +101,17 @@ const PageRoutes = (props) => {
           />
         </Route>
         <Route
-          path="/admin/*"
+          path='/admin/*'
           element={
             <ProtectedRoutes>
-              <Route path="/addItem" />
-              <Route path="/list" />
+              <Route path='/addItem' />
+              <Route path='/list' />
             </ProtectedRoutes>
           }
         />
-        <Route path="/admin/*">
+        <Route path='/admin/*'>
           <Route
-            path="products"
+            path='products'
             element={
               <ProtectedRoutes>
                 <AdminProducts />
@@ -119,7 +128,7 @@ const PageRoutes = (props) => {
           />
         </Route>
       </Route>
-      <Route path="*" element={<NotFound />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 };
