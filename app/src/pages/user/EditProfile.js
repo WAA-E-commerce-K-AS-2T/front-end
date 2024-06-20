@@ -59,10 +59,15 @@ const EditProfile = () => {
   return (
     <div className="mx-24 my-8">
       <h3 className="text-2xl font-bold">Edit profile</h3>
-      <form className="mt-4 text-left  grid grid-cols-2 gap-8" onSubmit={handleSubmit} ref={formRef}>
+      <form
+        className="mt-4 text-left  grid grid-cols-2 gap-8"
+        onSubmit={handleSubmit}
+        ref={formRef}>
         <div className="col-span-1">
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email">
               Email
             </label>
             <input
@@ -75,7 +80,9 @@ const EditProfile = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username">
               Username
             </label>
             <input
@@ -88,7 +95,9 @@ const EditProfile = () => {
             />
           </div>
           <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password">
               User type
             </label>
             <div className="flex gap-4 items-center">
@@ -110,7 +119,7 @@ const EditProfile = () => {
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
                 disabled
               />
-              <label for="buyer">Buyer</label>
+              <label htmlFor="buyer">Buyer</label>
             </div>
           </div>
 
