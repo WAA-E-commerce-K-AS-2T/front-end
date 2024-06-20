@@ -130,12 +130,15 @@ const ProductDetails = (props) => {
                 </span>
               </div>
             </div>
-
-            <button
-              className="bg-black text-white px-6 py-3 rounded-lg mb-4 text-lg"
-              onClick={addToCart}>
-              Add to Cart
-            </button>
+            {auth_type === "buyer" ? (
+              <button
+                className="bg-black text-white px-6 py-3 rounded-lg mb-4 text-lg"
+                onClick={addToCart}>
+                Add to Cart
+              </button>
+            ) : (
+              <></>
+            )}
 
             {/* Description in bordered box */}
             <p className="text-lg text-gray-700">
@@ -199,7 +202,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
           ))}
-          {auth_type == "buyer" ? (
+          {auth_type === "buyer" ? (
             <button
               onClick={() => setIsReviewModalOpen(true)}
               className="bg-black text-white px-6 py-3 rounded-lg mr-4 hover:bg-teal-500 hover:text-black hover:border-2 hover:border-gray-500">
