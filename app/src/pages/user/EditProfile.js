@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import CustomButton from "../../components/controllers/CustomButton";
-import { Link } from "react-router-dom";
 import { setLoading } from "../../redux/actions";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import axios from "axios";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -11,30 +11,32 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const formRef = useRef();
 
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [authType, setAuthType] = useState("");
-  const [address, setAddress] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
 
+    const formData = formRef.current;
+
     const data = {
-      email: email,
-      fullName: username,
-      password: password,
-      authtype: authType,
+      fullName: formData["fullName"].value,
+      address: {
+        address1: formData["address1"].value,
+        address2: "asdfasdf asdfasd",
+        address3: "",
+        address4: "",
+        city: formData["city"].value,
+        zipcode: formData["zipcode"].value,
+        pincode: formData["pincode"].value,
+      },
     };
+
+    axios.put("http://localhost:8080/api/v1/profile", data).then((response) => {
+      console.log(response.data);
+    });
   };
   useEffect(() => {
-    // setEmail(user.email);
-    // setUsername(user.fullName);
-    // setPassword(user.email);
-    // setAuthType(user.email);
-    // setAddress(user.email);
-  });
+    formRef.current.fullName.value = user.fullName;
+  }, [user]);
 
   return (
     <div className="mx-24 my-8">
@@ -50,9 +52,8 @@ const EditProfile = () => {
               id="email"
               type="text"
               placeholder="Enter an email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              value={user.email}
+              disabled
             />
           </div>
           <div className="mt-6">
@@ -64,22 +65,7 @@ const EditProfile = () => {
               id="username"
               type="text"
               placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mt-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="fullName"
               required
             />
           </div>
@@ -93,18 +79,18 @@ const EditProfile = () => {
                 value="SELLER"
                 label="Seller"
                 name="authType"
-                checked={authType === "SELLER"}
-                onChange={(e) => setAuthType(e.target.value)}
+                checked={user.auth_type === "seller"}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
+                disabled
               />
               <label for="seller">Seller</label>
               <input
                 type="radio"
                 value="BUYER"
                 name="authType"
-                checked={authType === "BUYER"}
-                onChange={(e) => setAuthType(e.target.value)}
+                checked={user.auth_type === "seller"}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-teal-600 focus:ring-2"
+                disabled
               />
               <label for="buyer">Buyer</label>
             </div>
@@ -126,38 +112,53 @@ const EditProfile = () => {
               required
             />
           </div>
-          <div className="mt-4">
-            <label htmlFor="address4">Zip code</label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="zipcode"
-              name="zipcode"
-              type="text"
-              placeholder="Zip code"
-              required
-            />
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <label htmlFor="city">City</label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="city"
+                name="city"
+                type="text"
+                placeholder="City"
+                required
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="state">State</label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="state"
+                name="state"
+                type="text"
+                placeholder="state"
+                required
+              />
+            </div>
           </div>
-          <div className="mt-4">
-            <label htmlFor="city">City</label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="city"
-              name="city"
-              type="text"
-              placeholder="City"
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="state">State</label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="state"
-              name="state"
-              type="text"
-              placeholder="state"
-              required
-            />
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <label htmlFor="address4">Zip code</label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="zipcode"
+                name="zipcode"
+                type="text"
+                placeholder="Zip code"
+                required
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="pincode">Pin code</label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="pincode"
+                name="pincode"
+                type="text"
+                placeholder="Pin code"
+                required
+              />
+            </div>
           </div>
         </div>
       </form>
