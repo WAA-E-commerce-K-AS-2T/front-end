@@ -10,14 +10,15 @@ import Products from "../pages/seller/products/Products";
 import AdminProducts from "../pages/admin/Products";
 import Reviews from "../pages/seller/Reviews";
 import Orders from "../pages/seller/Orders";
+import ProductCart from "../pages/buyer/ProductCart";
 import Profile from "../pages/user/Profile";
 import EditProduct from "../pages/seller/products/EditProduct";
 import EditProfile from "../pages/user/EditProfile";
-import ProductDetails from "../pages/ProductDetails";
 import ShippingForm from "./cartComponents/ShippingForm";
 import ProductCart from "../pages/ProductCart";
 import SearchResult from "../pages/buyer/SearchResult";
-import ProductBuy from "../pages/Products";
+import ProductBuy from "../pages/buyer/ProductBuy";
+import ProductDetails from "../pages/buyer/ProductDetails";
 
 const PageRoutes = (props) => {
   return (

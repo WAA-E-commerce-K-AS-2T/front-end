@@ -23,7 +23,6 @@ const ShippingForm = () => {
   };
 
   const handleDownloadReceipt = () => {
-    // Logic for downloading the receipt
     console.log("Receipt downloaded");
     handleModalClose();
   };
@@ -31,8 +30,6 @@ const ShippingForm = () => {
     console.log(data);
     setIsModalVisible(true);
     swal("Hello world!");
-
-    // Handle form submission
   };
 
   return (

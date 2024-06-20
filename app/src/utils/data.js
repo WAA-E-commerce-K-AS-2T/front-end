@@ -210,3 +210,19 @@ export const productData = {
     },
   ],
 };
+
+export const orderHistoryData = [
+  {
+    id: 1,
+    total: 120.99,
+    date: "2024-06-19",
+    deliveredTo: "John Doe",
+    status: "Delivered",
+    products: [
+      { name: "Product 1", quantity: 2 },
+      { name: "Product 2", quantity: 1 },
+    ],
+    paymentMode: "Credit Card",
+  },
+  // Add more orders as needed
+];
