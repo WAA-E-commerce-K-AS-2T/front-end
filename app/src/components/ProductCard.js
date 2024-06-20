@@ -1,6 +1,7 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
+import { renderStars } from "../utils/renderStars";
 const ProductCard = ({
   id,
   image,
@@ -11,7 +12,6 @@ const ProductCard = ({
   totalReviews,
   averageRating,
 }) => {
-  console.log({ reviews, totalReviews, averageRating });
   return (
     <Link to={`/product/${id}`} className="block">
       <div className="flex flex-col items-center justify-start w-full h-full p-4 border border-gray-200 rounded-lg shadow-md">
@@ -20,7 +20,9 @@ const ProductCard = ({
         <span className="text-sm text-gray-700">{name}</span>
         <span className="text-xs text-gray-500">{description}</span>
         <span className="flex items-center mt-2">
-          <span className="inline-flex text-[#000] mr-1"> </span>
+          <span className="inline-flex text-[#000] mr-1">
+            {renderStars(averageRating, "yellow")}
+          </span>
           <span className="text-xs text-gray-500 ml-1 truncate">
             ({reviews ? reviews : "No reviews to show"})
           </span>
