@@ -163,7 +163,7 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <button className="bg-teal-500 text-white px-4 py-2 rounded-lg mb-4">
+            <button className="bg-black text-white px-4 py-2 rounded-lg mb-4">
               Add to Cart
             </button>
 
@@ -230,7 +230,7 @@ const ProductDetails = () => {
           ))}
           <button
             onClick={() => setIsReviewModalOpen(true)}
-            className="bg-teal-500 text-white px-4 py-2 rounded-lg">
+            className="bg-black text-white px-4 py-2 rounded-lg">
             Write a Review
           </button>
         </div>

@@ -78,7 +78,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit }) => {
             </button>
             <button
               type="submit"
-              className={`bg-teal-500 text-white px-4 py-2 rounded-lg ${
+              className={`bg-black text-white px-4 py-2 rounded-lg ${
                 !isValid ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!isValid}>
