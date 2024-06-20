@@ -35,7 +35,7 @@ const Reviews = () => {
     fetchReview();
   }, []);
   return (
-    <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
+    <div className="relative overflow-x-auto sm:rounded-lg mx-16 my-8">
       <table className="w-full text-sm text-left rtl:text-right">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>

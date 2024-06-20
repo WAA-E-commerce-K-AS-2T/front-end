@@ -49,7 +49,7 @@ const Products = () => {
     getAllCategory();
   }, []);
   return (
-    <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
+    <div className="relative overflow-x-auto sm:rounded-lg mx-16 my-8">
       <div className="text-right mb-4">
         <CustomButton
           text="+ Add Product"

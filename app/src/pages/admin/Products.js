@@ -56,7 +56,7 @@ const AdminProducts = () => {
   useEffect(() => {}, [products]);
 
   return (
-    <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
+    <div className="relative overflow-x-auto sm:rounded-lg mx-16 my-8">
       <div className="text-right mb-4"></div>
       <table className="w-full text-sm text-left rtl:text-right">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
