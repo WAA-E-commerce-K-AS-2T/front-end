@@ -1,15 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const CartItem = ({ item, handleIncrement, handleDecrement, handleRemove }) => {
   const { id, productId, quantity, price } = item;
+  const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col border border-gray-200 rounded-md p-4 shadow-sm">
+    <div
+      className="flex flex-col border border-gray-200 rounded-md p-4 shadow-sm"
+      onClick={() => navigate(`/product/${productId}`)}
+    >
       <div className="flex items-center">
         <div className="h-24 w-24 rounded-md border border-gray-200">
           <img
-            src={item.image}
-            alt={item.name}
+            src={item?.imageUrl}
+            alt={item?.name}
             className="h-full w-full object-cover object-center"
           />
         </div>
