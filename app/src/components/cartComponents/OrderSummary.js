@@ -31,6 +31,7 @@ const OrderSummary = ({ total }) => {
             <button
               type="button"
               className="bg-white rounded-md text-black font-medium px-4 py-2 hover:bg-teal-600"
+              onClick={() => navigate("/")}
             >
               Continue Shopping
               <ChevronRightIcon
