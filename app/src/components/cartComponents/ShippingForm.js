@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Breadcrumb from "../Breadcrumb";
-import CheckoutModal from "./CheckoutModal";
+import Breadcrumb from "../common/Breadcrumb";
 import swal from "sweetalert";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -33,7 +32,6 @@ const ShippingForm = () => {
 
       .catch((err) => console.log(err));
   };
-  console.log("🚀 ~ getBuyerAddress ~ setAddress:", address);
 
   useEffect(() => {
     getBuyerAddress();

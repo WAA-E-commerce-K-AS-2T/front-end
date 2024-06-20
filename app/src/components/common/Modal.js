@@ -17,8 +17,7 @@ const Modal = ({ onClose, children }) => {
           </div>
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 };
 

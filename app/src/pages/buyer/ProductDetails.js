@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../../components/Breadcrumb";
+import { productData } from "../../utils/data";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { renderStars } from "../../utils/renderStars";
 import toast from "react-hot-toast";
@@ -10,8 +11,6 @@ import toast from "react-hot-toast";
 const ProductDetails = (props) => {
   const { id } = useParams();
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate();
-
   const [productDetails1, setProductDetails1] = useState({});
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
@@ -19,71 +18,54 @@ const ProductDetails = (props) => {
   const [allReviews, setAllReviews] = useState([]);
 
   const handleReviewSubmit = async (review) => {
-    if (user) {
-      try {
-        const response = await axios.post(`http://localhost:8080/api/v1/products/${id}/reviews`, {
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/products/${id}/reviews`, { rating: review.rating, comment: review.reviewText });
+      setAllReviews([
+        ...allReviews,
+        {
           rating: review.rating,
           comment: review.reviewText,
-        });
-        setAllReviews([
-          ...allReviews,
-          {
-            rating: review.rating,
-            comment: review.reviewText,
-            createdDate: new Date().toLocaleDateString(),
-            createdBy: user.fullName,
-          },
-        ]);
-        toast.success("Review submitted successfully");
-      } catch (error) {
-        console.log(error);
-        toast.error("Failed to submit review");
-      }
-    } else {
-      navigate("/login");
+          createdDate: new Date().toLocaleDateString(),
+          createdBy: user?.fullName,
+        },
+      ]);
+      toast.success("Review submitted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to submit review");
     }
   };
 
   const addToCart = async () => {
-    if (user) {
-      const token = localStorage.getItem("token");
-      const data = {
-        productId: id,
-        quantity: 1,
-      };
-      try {
-        await axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        toast.success("Item added to cart");
-      } catch (err) {
-        console.error(err);
-        toast.error("Failed to add item to cart");
-      }
-    } else {
-      navigate("/login");
-    }
-  };
-
-  const showReview = () => {
-    if (user) setIsReviewModalOpen(true);
-    else {
-      navigate("/login");
-    }
-  };
-  const fetchProductDetails = async () => {
+    const token = localStorage.getItem("token");
+    const data = {
+      productId: id,
+      quantity: 1,
+    };
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/products/${id}`);
-      setProductDetails1(response.data);
-      setAllReviews(response.data?.reviews || []);
-    } catch (error) {
-      console.error("Error fetching product details:", error);
+      await axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Item added to cart");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to add item to cart");
     }
   };
 
   useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/products/${id}`);
+        setProductDetails1(response.data);
+        setAllReviews(response.data?.reviews || []);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
     fetchProductDetails();
   }, [id]);
 
@@ -94,7 +76,7 @@ const ProductDetails = (props) => {
         {/* Left side: Breadcrumbs, image, and variant options */}
         <div className="flex-1 lg:w-1/4 flex flex-col p-4 rounded-lg">
           <div className="flex-1">
-            <img src={productDetails1.productPhotos?.[0]?.imageUrl} alt="product" className="w-full h-auto mb-4 lg:mb-0" />
+            <img src={productDetails1.productPhotos?.[0]?.imageUrl} alt="image of product" className="w-full h-auto mb-4 lg:mb-0" />
           </div>
           <div className="flex-1 flex flex-wrap gap-2 justify-left mt-4">
             {productDetails1.productPhotos?.map((photo, index) => (
@@ -128,10 +110,13 @@ const ProductDetails = (props) => {
                 <span className="text-lg">&nbsp; out of {productDetails1.totalReviews} reviews</span>
               </div>
             </div>
-
-            <button className="bg-black text-white px-6 py-3 rounded-lg mb-4 text-lg" onClick={addToCart}>
-              Add to Cart
-            </button>
+            {user?.auth_type === "buyer" ? (
+              <button className="bg-black text-white px-6 py-3 rounded-lg mb-4 text-lg" onClick={addToCart}>
+                Add to Cart
+              </button>
+            ) : (
+              <></>
+            )}
 
             {/* Description in bordered box */}
             <p className="text-lg text-gray-700">{productDetails1.description}</p>
@@ -180,12 +165,13 @@ const ProductDetails = (props) => {
               </div>
             </div>
           ))}
-
-          <button
-            onClick={() => showReview()}
-            className="bg-black text-white px-6 py-3 rounded-lg mr-4 hover:bg-teal-500 hover:text-black hover:border-2 hover:border-gray-500">
-            Write a Review
-          </button>
+          {user?.auth_type === "buyer" ? (
+            <button
+              onClick={() => setIsReviewModalOpen(true)}
+              className="bg-black text-white px-6 py-3 rounded-lg mr-4 hover:bg-teal-500 hover:text-black hover:border-2 hover:border-gray-500">
+              Write a Review
+            </button>
+          ) : null}
           <button type="button" className="border-2 border-gray-500 bg-white text-gray-700 px-6 py-3 rounded-lg hover:bg-teal-500 hover:text-white">
             Load more...
           </button>
