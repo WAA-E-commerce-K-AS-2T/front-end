@@ -1,13 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { setLoading } from "../../redux/actions";
 
 const Reviews = () => {
   const user = useSelector((state) => state.auth.user);
-  const [purchases, setPurchases] = useState([{ product: "", username: "", rating: "", reviews: "" }]);
+  const [reviews, setReviews] = useState([{ product: "", username: "", rating: "", reviews: "" }]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const fetchReview = () => {
+    dispatch(setLoading(true));
+    axios
+      .get("http://localhost:8080/api/v1/review")
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+
+  const deleteReview = (id) => {
+    axios.delete("http://localhost:8080/api/v1/review/" + id).then((response) => {
+      toast.success("Deleted review!");
+    });
+  };
+
+  useEffect(() => {
+    fetchReview();
+  }, []);
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
       <table className="w-full text-sm text-left rtl:text-right">
@@ -33,7 +58,7 @@ const Reviews = () => {
           </tr>
         </thead>
         <tbody>
-          {purchases.map((item) => (
+          {reviews.map((item) => (
             <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
               <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                 <Link to="/:id"> Apple MacBook Pro 17"</Link>
@@ -43,7 +68,7 @@ const Reviews = () => {
               <td className="px-6 py-4">Very Good</td>
               {user.auth_type === "admin" && (
                 <td className="px-6 py-4">
-                  <button to="" className="font-medium text-blue-600 mr-4 hover:underline">
+                  <button to="" onClick={() => deleteReview(item.id)} className="font-medium text-blue-600 mr-4 hover:underline">
                     Delete
                   </button>
                 </td>

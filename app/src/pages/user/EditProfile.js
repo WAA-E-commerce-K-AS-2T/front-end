@@ -4,12 +4,14 @@ import CustomButton from "../../components/controllers/CustomButton";
 import { setLoading } from "../../redux/actions";
 import { useEffect, useRef } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formRef = useRef();
+  const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,9 @@ const EditProfile = () => {
     const formData = formRef.current;
 
     const data = {
-      fullName: formData["fullName"].value,
+      fullname: formData["fullName"].value,
       address: {
+        id: "",
         address1: formData["address1"].value,
         address2: "asdfasdf asdfasd",
         address3: "",
@@ -27,12 +30,27 @@ const EditProfile = () => {
         city: formData["city"].value,
         zipcode: formData["zipcode"].value,
         pincode: formData["pincode"].value,
+        state: formData["state"].value,
       },
     };
 
-    axios.put("http://localhost:8080/api/v1/profile", data).then((response) => {
-      console.log(response.data);
-    });
+    axios
+      .put("http://localhost:8080/api/v1/profile", data, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        toast.success("Profile changed!");
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error("Error");
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   };
   useEffect(() => {
     formRef.current.fullName.value = user.fullName;
