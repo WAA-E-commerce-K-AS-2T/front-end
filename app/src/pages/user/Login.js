@@ -4,6 +4,7 @@ import CustomButton from "../../components/controllers/CustomButton";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoading, setUser } from "../../redux/actions";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -18,32 +19,32 @@ const Login = () => {
       email: email,
       password: password,
     };
-    try {
-      axios.post("http://localhost:8080/login", data).then((response) => {
+
+    axios
+      .post("http://localhost:8080/login", data)
+      .then((response) => {
+        const { token, user } = response.data;
+        user.auth_type =
+          user.roles[0].name === "ROLE_SELLER"
+            ? "seller"
+            : user.roles[0].name === "ROLE_BUYER"
+            ? "buyer"
+            : user.roles[0].name === "ROLE_SYSTADM"
+            ? "admin"
+            : "";
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        dispatch(setUser(user));
+        navigate(user.auth_type === "admin" ? "/admin/products" : user.auth_type === "seller" ? "/seller/products" : "/");
+      })
+      .catch((error) => {
+        toast.error("Username or password is wrong!");
+        console.log("Error", error);
+      })
+      .finally(() => {
         dispatch(setLoading(false));
-        if (response.status === 200) {
-          const { token, user } = response.data;
-          user.auth_type =
-            user.roles[0].name === "ROLE_SELLER"
-              ? "seller"
-              : user.roles[0].name === "ROLE_BUYER"
-              ? "buyer"
-              : user.roles[0].name === "ROLE_SYSTADM"
-              ? "admin"
-              : "";
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
-
-          dispatch(setUser(user));
-
-          navigate(user.auth_type === "admin" ? "/admin/products" : user.auth_type === "seller" ? "/seller/products" : "/");
-        } else {
-          alert("Error");
-        }
       });
-    } catch (error) {
-      console.log(error);
-    }
 
     setEmail("");
     setPassword("");

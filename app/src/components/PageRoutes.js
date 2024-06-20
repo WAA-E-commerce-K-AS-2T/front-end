@@ -17,6 +17,7 @@ import ProductDetails from "../pages/ProductDetails";
 import ShippingForm from "./cartComponents/ShippingForm";
 import ProductCart from "../pages/ProductCart";
 import SearchResult from "../pages/buyer/SearchResult";
+import ProductBuy from "../pages/Products";
 
 const PageRoutes = (props) => {
   return (
@@ -25,7 +26,7 @@ const PageRoutes = (props) => {
       <Route path="/register" element={<Register />} />
 
       <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<ProductBuy />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/shipping" element={<ShippingForm />} />
         <Route path="/cart" element={<ProductCart />} />

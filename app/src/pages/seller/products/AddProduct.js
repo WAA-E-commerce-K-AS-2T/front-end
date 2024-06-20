@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import CustomButton from "../../../components/controllers/CustomButton";
+import { useNavigate } from "react-router";
 
 const AddProduct = () => {
   const formRef = useRef();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [selectedCat, setSelectedCat] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -13,9 +15,7 @@ const AddProduct = () => {
   useEffect(() => {
     const getAllCategory = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/category"
-        );
+        const response = await axios.get("http://localhost:8080/api/v1/category");
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -26,9 +26,7 @@ const AddProduct = () => {
 
   const handleCategoryChange = (e) => {
     const selectedCategoryId = e.target.value;
-    const selectedCategory = categories.find(
-      (category) => category.id.toString() === selectedCategoryId
-    );
+    const selectedCategory = categories.find((category) => category.id.toString() === selectedCategoryId);
     setSubCategories(selectedCategory ? selectedCategory.subCategories : []);
     setSelectedCat([selectedCategoryId]);
     setSelectedSubCat("");
@@ -59,26 +57,20 @@ const AddProduct = () => {
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append(
-        "product",
-        new Blob([JSON.stringify(data)], { type: "application/json" })
-      );
+      formData.append("product", new Blob([JSON.stringify(data)], { type: "application/json" }));
       Array.from(form["images"].files).forEach((file) => {
         formData.append("photos", file);
       });
 
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/products",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/v1/products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response.data);
       toast.success("Successfully added!");
+      navigate("/seller/products");
     } catch (error) {
       console.log(error);
       toast.error("Error");
@@ -88,22 +80,11 @@ const AddProduct = () => {
   return (
     <>
       <p className="text-3xl text-left mx-24 my-8">Add product</p>
-      <form
-        className="customForm grid-cols-2 gap-8"
-        ref={formRef}
-        onSubmit={handleSubmit}
-      >
+      <form className="customForm grid-cols-2 gap-8" ref={formRef} onSubmit={handleSubmit}>
         <div className="col-span-1">
           <div>
             <label htmlFor="name">Name</label>
-            <input
-              className="focus:outline-teal-500"
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Product name"
-              required
-            />
+            <input className="focus:outline-teal-500" id="name" name="name" type="text" placeholder="Product name" required />
           </div>
           <div className="mt-4">
             <label htmlFor="categories">Categories</label>
@@ -112,8 +93,7 @@ const AddProduct = () => {
                 className="focus:ring-teal-500 focus:border-teal-500 focus:outline-teal-500"
                 name="category"
                 onChange={handleCategoryChange}
-                value={selectedCat[0] || ""}
-              >
+                value={selectedCat[0] || ""}>
                 <option value="">Select Category</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -126,8 +106,7 @@ const AddProduct = () => {
                 name="subCategory"
                 onChange={handleSubCategoryChange}
                 value={selectedSubCat}
-                disabled={!subCategories.length}
-              >
+                disabled={!subCategories.length}>
                 <option value="">Select Subcategory</option>
                 {subCategories.map((subCategory) => (
                   <option key={subCategory.id} value={subCategory.id}>
@@ -162,7 +141,7 @@ const AddProduct = () => {
           </div>
           <div className="mt-4">
             <label htmlFor="images">Images</label>
-            <input type="file" name="images" multiple />
+            <input type="file" name="images" multiple accept="image/*" />
           </div>
           <div className="flex items-center justify-between mt-8">
             <CustomButton text="Add Product" type="submit" />

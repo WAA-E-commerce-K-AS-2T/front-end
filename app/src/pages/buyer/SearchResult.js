@@ -1,38 +1,37 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import ProductBuy from "../../pages/Products";
 import CustomButton from "../../components/controllers/CustomButton";
-import Product from "../../components/Product";
+import ProductCard from "../../components/ProductCard";
 
 const SearchResult = () => {
   const initialVal = [
     {
       name: "Color",
       values: [
-        { name: "blue", isChecked: true },
-        { name: "white", isChecked: true },
+        { name: "blue", isChecked: false },
+        { name: "white", isChecked: false },
       ],
       isActive: false,
     },
     {
       name: "productSize",
       values: [
-        { name: "S", isChecked: true },
-        { name: "M", isChecked: true },
+        { name: "S", isChecked: false },
+        { name: "M", isChecked: false },
       ],
       isActive: false,
     },
     {
       name: "Material",
       values: [
-        { name: "Cotton", isChecked: true },
-        { name: "Silk", isChecked: true },
+        { name: "Cotton", isChecked: false },
+        { name: "Silk", isChecked: false },
       ],
       isActive: false,
     },
 
-    { name: "Brand", values: [{ name: "Nike", isChecked: true }], isActive: false },
+    { name: "Brand", values: [{ name: "Nike", isChecked: false }], isActive: false },
   ];
   const [searchParams] = useSearchParams();
   const productName = searchParams.get("name") || "";
@@ -81,8 +80,9 @@ const SearchResult = () => {
   };
   const fetchProducts = (params) => {
     console.log("Params", params);
-    axios.get("http://localhost:8080/api/v1/products/filter?page=0&size=10&" + params).then((response) => {
-      console.log(response.data);
+    axios.get("http://localhost:8080/api/v1/products/filter?page=0&size=10" + params).then((response) => {
+      console.log(response.data.content);
+      setProducts(response.data.content);
     });
   };
 
@@ -196,22 +196,26 @@ const SearchResult = () => {
           <CustomButton text="Apply" handleClick={applyFilter} />
         </div>
       </div>
-      <div className=" relative flex flex-col">
-        <div className="container mx-auto ">
-          {/* {products.map(product =>
-    
-          <ProductCard
-          key={index}
-          id={product.id}
-          name={product.name}
-          image={product.image}
-          price={product.price}
-          description={product.description}
-          rating={product.rating}
-          reviews={product.reviews})
-        />
-    } */}
-          <div className="flex justify-center bottom-4 mt-4 right-4">
+      <div className="w-full">
+        <div className="container w-full mx-8 my-4">
+          <p className="text-left font-bold text-xl">
+            Results for "{productName}" <span className="text-gray-600 font-medium">({products.length})</span>
+          </p>
+          <div className="grid grid-cols-3 gap-2 w-full">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                image={product.image}
+                price={product.price}
+                description={product.description}
+                rating={product.rating || []}
+                reviews={product.reviews}
+              />
+            ))}
+          </div>
+          <div className="flex justify-center bottom-4 mt-4 right-4 w-full">
             {/* Pagination component */}
             <div className="flex items-center space-x-2">
               <button className="px-3 py-1 bg-teal-200 rounded">Previous</button>

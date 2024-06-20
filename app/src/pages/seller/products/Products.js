@@ -8,9 +8,9 @@ import toast from "react-hot-toast";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([
-    { id: 1, name: "Apple MacBook Pro 17", category: "electronics", price: 1000, inStock: 0, size: "", material: "" },
-  ]);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const navigate = useNavigate();
 
   const fetchData = () => {
@@ -34,8 +34,18 @@ const Products = () => {
     });
   };
 
+  const getAllCategory = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/category");
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    getAllCategory();
   }, []);
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
@@ -86,15 +96,19 @@ const Products = () => {
               <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                 {item.name}
               </th>
-              <td className="px-6 py-4">{item.category}</td>
+              <td className="px-6 py-4">
+                {categories.filter((i) => item.categoryIds.includes(i.id)).length > 0
+                  ? categories.filter((i) => item.categoryIds.includes(i.id))[0].name
+                  : ""}
+              </td>
               <td className="px-6 py-4">{item.price}</td>
               <td className="px-6 py-4">{item.inStock}</td>
               <td className="px-6 py-4">{item.color}</td>
-              <td className="px-6 py-4">{item.size}</td>
+              <td className="px-6 py-4">{item.productSize}</td>
               <td className="px-6 py-4">{item.material}</td>
               <td className="px-6 py-4 text-teal-500">Approved</td>
               <td className="px-6 py-4">
-                <Link to={`/seller/product/edit/${item.id}`} className="font-medium text-blue-600 mr-4 hover:underline">
+                <Link to={`/seller/editProduct/${item.id}`} className="font-medium text-blue-600 mr-4 hover:underline">
                   Edit
                 </Link>
                 <button className="font-medium text-blue-600  hover:underline" onClick={() => deleteItem(item.id)}>

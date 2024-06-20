@@ -19,7 +19,7 @@ const AdminProducts = () => {
     try {
       axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
         dispatch(setLoading(false));
-        console.log(response.data.content);
+        console.log("content", response.data.content);
         setProducts(response.data.content);
       });
     } catch (e) {
@@ -88,7 +88,7 @@ const AdminProducts = () => {
               <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                 {item.name}
               </th>
-              <td className="px-6 py-4">{categories.filter((i) => i.id === item.category)[0].name}</td>
+              <td className="px-6 py-4">{categories.filter((i) => i.id === item.category)[0].name || ""}</td>
               <td className="px-6 py-4">{item.price}</td>
               <td className="px-6 py-4">{item.inStock}</td>
               <td className="px-6 py-4">{item.color}</td>
