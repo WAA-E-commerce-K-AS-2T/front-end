@@ -7,17 +7,8 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const ProductCart = () => {
-  const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [cart, setCart] = useState([]);
   const [isChanging, setIsChanging] = useState(false);
-
-  const handleBuyClick = () => {
-    setIsSummaryVisible(true);
-  };
-
-  const handleCheckout = () => {
-    setIsSummaryVisible(true);
-  };
 
   const getUserCart = () => {
     const token = localStorage.getItem("token");
@@ -46,14 +37,11 @@ const ProductCart = () => {
   const handleRemove = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(
-        `http://localhost:8080/api/v1/cart/cartItems/product/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:8080/api/v1/cart/cartItems/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setIsChanging(!isChanging);
     } catch (err) {
       console.log(err);
@@ -67,7 +55,7 @@ const ProductCart = () => {
       quantity: 1,
     };
     try {
-      await axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
+      await axios.post(`http://localhost:8080/api/v1/cart/cartItems`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -113,19 +101,8 @@ const ProductCart = () => {
             handleDecrement={handleDecrement}
             handleRemove={handleRemove}
           />
-          {isSummaryVisible && (
-            <div className="mt-6">
-              <CustomButton
-                text="Proceed to Checkout"
-                handleClick={handleCheckout}
-              />
-            </div>
-          )}
         </div>
-        <OrderSummary
-          total={cart?.totalPrice}
-          handleBuyClick={handleBuyClick}
-        />
+        <OrderSummary total={cart?.totalPrice} />
       </div>
     </div>
   );

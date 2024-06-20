@@ -6,12 +6,11 @@ const CartItem = ({ item, handleIncrement, handleDecrement, handleRemove }) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="flex flex-col border border-gray-200 rounded-md p-4 shadow-sm"
-      onClick={() => navigate(`/product/${productId}`)}
-    >
+    <div className="flex flex-col border border-gray-200 rounded-md p-4 shadow-sm">
       <div className="flex items-center">
-        <div className="h-24 w-24 rounded-md border border-gray-200">
+        <div
+          className="h-24 w-24 rounded-md border border-gray-200"
+          onClick={() => navigate(`/product/${productId}`)}>
           <img
             src={item?.imageUrl}
             alt={item?.name}
@@ -34,16 +33,14 @@ const CartItem = ({ item, handleIncrement, handleDecrement, handleRemove }) => {
                 <button
                   type="button"
                   className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300"
-                  onClick={() => handleDecrement(productId)}
-                >
+                  onClick={() => handleDecrement(productId)}>
                   -
                 </button>
                 <span className="text-gray-900">{item.quantity}</span>
                 <button
                   type="button"
                   className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300"
-                  onClick={() => handleIncrement(productId)}
-                >
+                  onClick={() => handleIncrement(productId)}>
                   +
                 </button>
               </div>
@@ -52,8 +49,7 @@ const CartItem = ({ item, handleIncrement, handleDecrement, handleRemove }) => {
               <button
                 type="button"
                 className="font-medium text-teal-600 hover:text-teal-500"
-                onClick={() => handleRemove(id)}
-              >
+                onClick={() => handleRemove(id)}>
                 Remove
               </button>
             </div>
