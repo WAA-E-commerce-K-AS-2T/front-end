@@ -12,7 +12,7 @@ const ProductBuy = () => {
         const response = await axios.get(
           `http://localhost:8080/api/v1/products`
         );
-        console.log("products fetched from server", response.data);
+        // console.log("products fetched from server", response.data);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product details:", error);

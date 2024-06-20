@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import { productData, productDetails } from "../../utils/data";
 import OIP from "./../../assets/images/OIP.png";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
 import Breadcrumb from "../../components/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
+import { useParams } from "react-router";
+import axios from "axios";
 
-const ProductDetails = (props) => {
+const ProductDetails = () => {
   const { name, image, price, description, details, specifications, reviews } =
     productDetails;
+  const [productDetails1, setProductDetails1] = useState({});
+  const { id } = useParams();
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -29,6 +33,22 @@ const ProductDetails = (props) => {
     ]);
   };
 
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/products/${id}`
+        );
+        console.log("productDetails fetched from server", response.data);
+        setProductDetails1(response.data);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    fetchProductDetails();
+  }, [id]);
+  console.log("photos", productDetails1.productPhotos);
   return (
     <div className='container mx-auto p-4'>
       <div className='flex flex-col lg:flex-row lg:space-x-8'>
@@ -36,7 +56,12 @@ const ProductDetails = (props) => {
         <div className='flex-1 lg:w-1/4 flex flex-col'>
           <Breadcrumb />
           <div className='flex-1'>
-            <img src={OIP} alt={name} className='w-full h-auto mb-4 lg:mb-0' />
+            <img
+              src={productDetails1.productPhotos?.[0]?.imageUrl}
+              // src={OIP}
+              alt={name}
+              className='w-full h-auto mb-4 lg:mb-0'
+            />
           </div>
           <div className='flex-1'>
             {/* Variant options */}
@@ -133,7 +158,7 @@ const ProductDetails = (props) => {
             <div className='box-border flex flex-row justify-between w-full'>
               <div className='box-border mt-0 ml-4 mr-4'>Name of seller</div>
             </div>
-            <h1 className='text-2xl font-bold mb-2'>{name}</h1>
+            <h1 className='text-2xl font-bold mb-2'>{productDetails1.name}</h1>
             <div className='text-lg font-semibold text-gray-900 mb-2'>
               ${price}
             </div>
@@ -169,7 +194,9 @@ const ProductDetails = (props) => {
             </button>
 
             {/* Description in bordered box */}
-            <p className='text-sm text-gray-700'>{description}</p>
+            <p className='text-sm text-gray-700'>
+              {productDetails1.description}
+            </p>
           </div>
 
           {/* About this item section */}
