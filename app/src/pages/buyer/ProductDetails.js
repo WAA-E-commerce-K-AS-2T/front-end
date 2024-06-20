@@ -230,8 +230,13 @@ const ProductDetails = () => {
           ))}
           <button
             onClick={() => setIsReviewModalOpen(true)}
-            className="bg-black text-white px-4 py-2 rounded-lg">
+            className="bg-black text-white px-4 py-2 rounded-lg mr-4 hover:bg-teal-500 hover:text-black hover:border-2 hover: border-gray-500">
             Write a Review
+          </button>
+          <button
+            type="button"
+            className="border-2 border-gray-500 bg-white text-gray-700 px-4 py-2 rounded-lg hover:bg-teal-500 hover:text-white ">
+            Load more...
           </button>
         </div>
       </div>
