@@ -2,7 +2,6 @@ import { StarIcon } from "@heroicons/react/solid";
 
 export const renderStars = (rating, color) => {
   if (!rating || isNaN(rating)) return null;
-  console.log("lllllll", rating);
 
   const roundedRating = Math.floor(rating);
   return (
