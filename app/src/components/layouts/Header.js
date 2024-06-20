@@ -34,6 +34,10 @@ const Header = () => {
     setInputValue(event.target.value);
   };
 
+  const onClickCart = () => {
+    navigate("/cart");
+  };
+
   return (
     <div className="header">
       <div className="top">
@@ -41,7 +45,14 @@ const Header = () => {
           <img className="h-10" alt="logo" src={logo} />
         </Link>
         <div className="flex gap-2 items-between shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="black"
+            className="size-6"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -64,15 +75,33 @@ const Header = () => {
           <div className="flex gap-12 items-center relative">
             {categories.map((i) => (
               <div className="relative">
-                <Link className="hover:underline text-black cursor-pointer" to="">
+                <Link
+                  className="hover:underline text-black cursor-pointer"
+                  to=""
+                >
                   {i.name}
                   <button className="border-none" onClick={() => handleOpen()}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-3 ml-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="black"
+                      className="size-3 ml-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                      />
                     </svg>
                   </button>
                 </Link>
-                <div className={`absolute top-4 ${subOpen ? "display" : "none"} shadow-sm p-6`}>
+                <div
+                  className={`absolute top-4 ${
+                    subOpen ? "display" : "none"
+                  } shadow-sm p-6`}
+                >
                   {i.sub &&
                     i.sub.map((j) => {
                       <Link>{j.name}</Link>;
@@ -84,7 +113,14 @@ const Header = () => {
           <div className="flex gap-4 items-center">
             <div className="relative">
               <button className="border-none absolute top-2 left-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="black"
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -99,9 +135,11 @@ const Header = () => {
                 className={`focus:ring-teal-500 focus:border-teal-500 focus:outline-teal-500 shadow appearance-none border rounded w-48 md:w-72 py-2 px-3 pl-12 text-gray-700 leading-tight`}
               />
             </div>
-            <button className="relative cursor-pointer">
+            <button className="relative cursor-pointer" onClick={onClickCart}>
               <img src={cart} alt="cart" className="h-9 w-9" />
-              <span className="absolute bg-yellow-500 rounded-full h-4 w-4 top-0 right-0 text-xs flex items-center justify-center text-white">5</span>
+              <span className="absolute bg-yellow-500 rounded-full h-4 w-4 top-0 right-0 text-xs flex items-center justify-center text-white">
+                5
+              </span>
             </button>
             <button className="relative cursor-pointer">
               <img src={list} alt="list" className="h-8 w-8" />
