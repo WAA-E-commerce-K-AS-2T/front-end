@@ -25,6 +25,8 @@ const ReviewModal = ({ isOpen, onClose, onSubmit }) => {
   };
 
   const submitForm = (data) => {
+    console.log("🚀 ~ submitForm ~ data:", data);
+
     onSubmit(data);
 
     onClose();
