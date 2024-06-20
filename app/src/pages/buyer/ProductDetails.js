@@ -6,6 +6,7 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { renderStars } from "../../utils/renderStars";
+import toast from "react-hot-toast";
 
 const ProductDetails = (props) => {
   const { id } = useParams();
@@ -23,8 +24,6 @@ const ProductDetails = (props) => {
         `http://localhost:8080/api/v1/products/${id}/reviews`,
         { rating: review.rating, comment: review.reviewText }
       );
-
-      console.log("🚀 ~ handleReviewSubmit ~ response:", response.data);
     } catch (error) {
       console.log(error);
     }
@@ -39,13 +38,30 @@ const ProductDetails = (props) => {
     ]);
   };
 
+  const addToCart = async () => {
+    const token = localStorage.getItem("token");
+    const data = {
+      productId: id,
+      quantity: 1,
+    };
+    try {
+      axios.post("http://localhost:8080/api/v1/cart/cartItems", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Item added to cart");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8080/api/v1/products/${id}`
         );
-        console.log("productDetails fetched from server", response.data);
         setProductDetails1(response.data);
         setAllReviews(response.data?.reviews);
       } catch (error) {

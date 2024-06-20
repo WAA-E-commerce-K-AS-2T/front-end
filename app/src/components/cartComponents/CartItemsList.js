@@ -9,7 +9,7 @@ const CartItemsList = ({
 }) => {
   return (
     <div className="space-y-4">
-      {cartItems.map((item, index) => (
+      {cartItems?.map((item, index) => (
         <CartItem
           key={index}
           item={item}
