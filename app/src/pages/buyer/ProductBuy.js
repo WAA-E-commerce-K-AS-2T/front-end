@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Product from "../components/Product";
 import axios from "axios";
+import Product from "../../components/Product";
 
 const ProductBuy = () => {
   const [products, setProducts] = useState(null);
