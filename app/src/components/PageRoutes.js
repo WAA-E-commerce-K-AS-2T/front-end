@@ -72,7 +72,7 @@ const PageRoutes = (props) => {
             path="order"
             element={
               <ProtectedRoutes>
-                <Orders />
+                <OrderHistory />
               </ProtectedRoutes>
             }
           />
