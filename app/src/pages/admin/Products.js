@@ -9,10 +9,11 @@ import CustomButton from "../../components/controllers/CustomButton";
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([
-    { id: 1, name: "Apple MacBook Pro 17", category: "electronics", price: 1000, inStock: 0, size: "", material: "" },
-  ]);
+  const status_types = ["APPROVED", "REJECTED"];
+  const token = localStorage.getItem("token");
+  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [status, setStatus] = useState(status_types[0]);
 
   const fetchData = () => {
     dispatch(setLoading(true));
@@ -28,8 +29,14 @@ const AdminProducts = () => {
     }
   };
 
-  const handleApprove = (value) => {
-    console.log(value);
+  const handleApprove = (productId) => {
+    console.log(token);
+    axios
+      .put(`http://localhost:8080/api/v1/products/${productId}/set-status`, { status }, { headers: { authorization: `Bearer ${token}` } })
+      .then((response) => {
+        toast.success("Product status changed!");
+        fetchData();
+      });
   };
 
   const getAllCategory = async () => {
@@ -45,6 +52,8 @@ const AdminProducts = () => {
     fetchData();
     getAllCategory();
   }, []);
+
+  useEffect(() => {}, [products]);
 
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-24 my-8">
@@ -76,7 +85,7 @@ const AdminProducts = () => {
             <th scope="col" className="px-6 py-3">
               Status
             </th>
-
+            <th scope="col" className="px-6 py-3"></th>
             <th scope="col" className="px-6 py-3">
               Action
             </th>
@@ -88,16 +97,37 @@ const AdminProducts = () => {
               <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                 {item.name}
               </th>
-              <td className="px-6 py-4">{categories.filter((i) => i.id === item.category)[0].name || ""}</td>
+              <td className="px-6 py-4">{categories.filter((i) => i.id === item.category)[0]?.name || ""}</td>
               <td className="px-6 py-4">{item.price}</td>
               <td className="px-6 py-4">{item.inStock}</td>
               <td className="px-6 py-4">{item.color}</td>
-              <td className="px-6 py-4">{item.size}</td>
+              <td className="px-6 py-4">{item.productSize}</td>
               <td className="px-6 py-4">{item.material}</td>
-              <td className="px-6 py-4 text-teal-500 font-semibold">Approved</td>
+              <td
+                className={`px-6 py-4 font-semibold ${
+                  item.productStatus === "Approved"
+                    ? "text-teal-500"
+                    : item.productStatus === "Rejected"
+                    ? "text-red-500"
+                    : item.productStatus === "In Review"
+                    ? "text-orange-500"
+                    : ""
+                }`}>
+                {item.productStatus}
+              </td>
+              <td>
+                <select
+                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}>
+                  {status_types.map((i) => (
+                    <option>{i}</option>
+                  ))}
+                </select>
+              </td>
               <td className="px-6 py-4 flex gap-2">
-                <CustomButton text="Reject" handleClick={handleApprove(false)} />
-                <CustomButton text="Approve" handleClick={handleApprove(true)} />
+                <CustomButton text="Save" handleClick={() => handleApprove(item.id)} />
               </td>
             </tr>
           ))}

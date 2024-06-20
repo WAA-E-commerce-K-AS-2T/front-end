@@ -109,6 +109,14 @@ const PageRoutes = (props) => {
               </ProtectedRoutes>
             }
           />
+          <Route
+            path="review"
+            element={
+              <ProtectedRoutes>
+                <Reviews />
+              </ProtectedRoutes>
+            }
+          />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
