@@ -20,7 +20,6 @@ const AdminProducts = () => {
     try {
       axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
         dispatch(setLoading(false));
-        console.log("content", response.data.content);
         setProducts(response.data.content);
       });
     } catch (e) {
@@ -30,7 +29,6 @@ const AdminProducts = () => {
   };
 
   const handleApprove = (productId) => {
-    console.log(token);
     axios
       .put(`http://localhost:8080/api/v1/products/${productId}/set-status`, { status }, { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {

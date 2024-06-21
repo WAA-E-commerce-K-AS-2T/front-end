@@ -3,40 +3,22 @@ import CustomButton from "../../components/controllers/CustomButton";
 import { useNavigate } from "react-router";
 import { setUser } from "../../redux/actions";
 import ProfileImg from "../../assets/images/profile.gif";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
-  const [address, setAddress] = useState(null);
-  const getAddress = () => {
-    axios
-      .get("http://localhost:8080/api/v1/buyers/address", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setAddress(response.data);
-        console.log(response.data);
-      })
-      .catch(() => {
-        toast.error("error");
-      });
-  };
+  const address = useSelector((state) => state.address.address);
+  console.log("address", address);
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("address");
     dispatch(setUser(null));
   };
-  useEffect(() => {
-    if (user.auth_type === "buyer") getAddress();
-  }, [user]);
+  useEffect(() => {}, [user]);
   return (
     <div className="flex items-start  justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 bg-white mt-16 rounded-lg shadow-md text-left w-full max-w-md z-20">

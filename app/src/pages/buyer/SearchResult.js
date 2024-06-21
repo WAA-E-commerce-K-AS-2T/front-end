@@ -56,32 +56,20 @@ const SearchResult = () => {
         filter.name === parent
           ? {
               ...filter,
-              values: filter.values.map((value) =>
-                value.name === field
-                  ? { ...value, isChecked: !value.isChecked }
-                  : value
-              ),
+              values: filter.values.map((value) => (value.name === field ? { ...value, isChecked: !value.isChecked } : value)),
             }
-          : filter
-      )
+          : filter,
+      ),
     );
   };
   const openPanel = (name) => {
-    setFilters((prevFilters) =>
-      prevFilters.map((filter) =>
-        filter.name === name
-          ? { ...filter, isActive: !filter.isActive }
-          : filter
-      )
-    );
+    setFilters((prevFilters) => prevFilters.map((filter) => (filter.name === name ? { ...filter, isActive: !filter.isActive } : filter)));
   };
   const applyFilter = () => {
     let params = filters.reduce((acc, filter) => {
       const selectedValues = filter.values.filter((value) => value.isChecked);
       if (selectedValues.length > 0) {
-        const paramString = selectedValues
-          .map((value) => `${filter.name.toLowerCase()}=${value.name}`)
-          .join("&");
+        const paramString = selectedValues.map((value) => `${filter.name.toLowerCase()}=${value.name}`).join("&");
         return acc ? `${acc}&${paramString}` : paramString;
       }
       return acc;
@@ -100,21 +88,14 @@ const SearchResult = () => {
     fetchProducts(params);
   };
   const fetchProducts = (params) => {
-    console.log("Params", params);
-    axios
-      .get(
-        "http://localhost:8080/api/v1/products/filter?page=0&size=10" + params
-      )
-      .then((response) => {
-        console.log(response.data.content);
-        setProducts(response.data.content);
-      });
+    axios.get("http://localhost:8080/api/v1/products/filter?page=0&size=10" + params).then((response) => {
+      setProducts(response.data.content);
+    });
   };
 
   const getAllCategory = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/v1/category");
-      console.log("getAllCategory", response.data);
       setCategories(response.data);
       let cats = [];
       response.data.map((i) => {
@@ -152,22 +133,13 @@ const SearchResult = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="black"
-                  className={`size-4 ml-4 transition-transform duration-300 ease-in-out transform ${
-                    i.isActive ? "rotate-180" : "rotate-0"
-                  }`}>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
+                  className={`size-4 ml-4 transition-transform duration-300 ease-in-out transform ${i.isActive ? "rotate-180" : "rotate-0"}`}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </button>
             </div>
 
-            <div
-              className={`${
-                i.isActive ? "h-auto" : "h-0"
-              } transition-height duration-500 ease-in-out overflow-hidden w-full `}>
+            <div className={`${i.isActive ? "h-auto" : "h-0"} transition-height duration-500 ease-in-out overflow-hidden w-full `}>
               {i.values.map((j) => (
                 <div className="w-full text-left ml-4 mt-2">
                   <input
@@ -177,11 +149,7 @@ const SearchResult = () => {
                     onChange={() => changeFilter(i.name, j.name)}
                     className="focus:ring-blue-500 w-4 h-4 text-teal-500 bg-teal-500 focus:ring-teal-500"
                   />
-                  <label className="ml-2">
-                    {i.name === "Category"
-                      ? categories.filter((c) => c.id === j.name)[0].name
-                      : j.name}
-                  </label>
+                  <label className="ml-2">{i.name === "Category" ? categories.filter((c) => c.id === j.name)[0].name : j.name}</label>
                 </div>
               ))}
             </div>
@@ -190,30 +158,20 @@ const SearchResult = () => {
         <div className="w-full">
           <div className="flex justify-between mt-4 items-center">
             Price
-            <button
-              onClick={() => setPrice({ ...price, isActive: !price.isActive })}>
+            <button onClick={() => setPrice({ ...price, isActive: !price.isActive })}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="black"
-                className={`size-4 ml-4 transition-transform duration-300 ease-in-out transform ${
-                  price.isActive ? "rotate-180" : "rotate-0"
-                }`}>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
+                className={`size-4 ml-4 transition-transform duration-300 ease-in-out transform ${price.isActive ? "rotate-180" : "rotate-0"}`}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             </button>
           </div>
 
-          <div
-            className={`${
-              price.isActive ? "h-auto" : "h-0"
-            } transition-height duration-500 ease-in-out overflow-hidden w-full `}>
+          <div className={`${price.isActive ? "h-auto" : "h-0"} transition-height duration-500 ease-in-out overflow-hidden w-full `}>
             <div className="text-left mt-4 flex gap-2 justify-between">
               <div>
                 {" "}
@@ -247,10 +205,7 @@ const SearchResult = () => {
       <div className="w-full">
         <div className="container w-full mx-8 my-4">
           <p className="text-left font-bold text-xl">
-            Results for "{productName}"{" "}
-            <span className="text-gray-600 font-medium">
-              ({products.length})
-            </span>
+            Results for "{productName}" <span className="text-gray-600 font-medium">({products.length})</span>
           </p>
           <div className="grid grid-cols-3 gap-2 w-full">
             {products.map((product) => (
@@ -269,9 +224,7 @@ const SearchResult = () => {
           <div className="flex justify-center bottom-4 mt-4 right-4 w-full">
             {/* Pagination component */}
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-1 bg-teal-200 rounded">
-                Previous
-              </button>
+              <button className="px-3 py-1 bg-teal-200 rounded">Previous</button>
               <span className="px-3 py-1">1</span>
               <span className="px-3 py-1">2</span>
               <span className="px-3 py-1">3</span>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/solid";
-import { orderHistoryData } from "../../utils/data";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
