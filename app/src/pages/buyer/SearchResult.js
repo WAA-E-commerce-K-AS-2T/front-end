@@ -210,14 +210,15 @@ const SearchResult = () => {
           <div className="grid grid-cols-3 gap-2 w-full">
             {products.map((product) => (
               <ProductCard
-                key={product.id}
+                key={product?.id}
                 id={product.id}
                 name={product.name}
-                image={product.image}
+                image={product.productPhotos}
                 price={product.price}
                 description={product.description}
-                rating={product.rating || []}
-                reviews={product.reviews}
+                reviews={product.reviews?.[0]?.comment}
+                totalReviews={product.totalReviews}
+                averageRating={product.averageRating}
               />
             ))}
           </div>

@@ -11,12 +11,8 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchOrders = () => {
-    const path =
-      user.auth_type === "seller"
-        ? "http://localhost:8080/api/v1/sellers/orderItems"
-        : "http://localhost:8080/api/v1/orders";
     axios
-      .get(path, { headers: { authorization: `Bearer ${token}` } })
+      .get("http://localhost:8080/api/v1/orders", { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
         setOrders(response.data);
       })
@@ -51,8 +47,7 @@ const OrderHistory = () => {
       },
     };
     try {
-      const templateId =
-        "f51c8894ffc2d0a45e5bbe137b24b367cdb119698255aeeea9dc2cb164abde37";
+      const templateId = "f51c8894ffc2d0a45e5bbe137b24b367cdb119698255aeeea9dc2cb164abde37";
       const apiKey =
         "test_eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5MTgyOTMxMzU3ODgwNzI3NjEiLCJhdWQiOiJjYXJib25lIiwiZXhwIjoyMzgxMTg0MjcyLCJkYXRhIjp7InR5cGUiOiJ0ZXN0In19.ALMIzeMC3xe50pRf_I-VgFUm1rChvwuQlBKVEs7GP-YTzd1g7cqb-2SQosJpkSLyaytcaNDM6dBnu6PlVnmweevNAOMt-FuL4Fj4zNKYg7CYsnm0SogZqTZjCZ57wZ1luhj68kgX-cJd9W3gWGFSBCsroD7Lf3bb_sF5mKem9tia8j8N";
 
@@ -104,25 +99,31 @@ const OrderHistory = () => {
 
   const cancelItem = (id) => {
     axios
-      .put(`http://localhost:8080/api/v1/orders/${id}/cancel`, {
-        headers: { authorization: `Bearer ${token}` },
-      })
+      .put(`http://localhost:8080/api/v1/orders/${id}/cancel`, {}, { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
-        setOrders(response.data);
         toast.success("Successfully canceled!");
+        fetchOrders();
       })
-      .toast.error("Error");
+      .catch(() => {
+        toast.error("You cannot cancel order after shipped!");
+      });
   };
   const changeStatus = (id) => {
     axios
-      .put(`http://localhost:8080/api/v1/orders/${id}/status`, {
-        headers: { authorization: `Bearer ${token}` },
-      })
+      .put(
+        `http://localhost:8080/api/v1/orders/${id}/status`,
+        {},
+        {
+          headers: { authorization: `Bearer ${token}` },
+        },
+      )
       .then((response) => {
-        setOrders(response.data);
         toast.success("Success proceeded!");
+        fetchOrders();
       })
-      .toast.error("Error");
+      .catch(() => {
+        toast.error("You cannot proceed status!");
+      });
   };
   useEffect(() => {
     fetchOrders();
@@ -147,15 +148,7 @@ const OrderHistory = () => {
               </div>
 
               <div className="text-right">
-                <span
-                  className={`${
-                    order.status === "Delivered"
-                      ? "text-green-500"
-                      : "text-yellow-500"
-                  } text-sm font-medium`}
-                >
-                  {order.status}
-                </span>
+                <span className={`${order.status === "Delivered" ? "text-green-500" : "text-yellow-500"} text-sm font-medium`}>{order.status}</span>
                 <div className="mt-2">
                   <span className="text-md">Payment Method: </span>
                   <span>{order.paymentMethod}</span>
@@ -173,22 +166,18 @@ const OrderHistory = () => {
                       <li>
                         {product.product.name} - Quantity: {product.quantity}
                       </li>
-                      {index < order.orderItems.length - 1 && (
-                        <hr className="my-2 border-gray-200" />
-                      )}
+                      {index < order.orderItems.length - 1 && <hr className="my-2 border-gray-200" />}
                     </React.Fragment>
                   ))}
                 </ul>
               </div>
               <div className="flex flex-col justify-end gap-4">
-                {(order.status === "PENDING" ||
-                  order.status === "PROCESSING") && (
+                {(order.status === "PENDING" || order.status === "PROCESSING") && (
                   <button
                     onClick={() => {
                       cancelItem(order.id);
                     }}
-                    className="px-4 h-8 text-sm font-medium text-gray-700 bg-white border-2 border-gray-700 rounded-md hover:bg-gray-300"
-                  >
+                    className="px-4 h-8 text-sm font-medium text-gray-700 bg-white border-2 border-gray-700 rounded-md hover:bg-gray-300">
                     Cancel Order
                   </button>
                 )}
@@ -197,15 +186,11 @@ const OrderHistory = () => {
                     onClick={() => {
                       changeStatus(order.id);
                     }}
-                    className="px-4  h-8 text-sm font-medium text-white bg-black rounded-md hover:bg-teal-700 "
-                  >
+                    className="px-4  h-8 text-sm font-medium text-white bg-black rounded-md hover:bg-teal-700 ">
                     Proceed status
                   </button>
                 )}
-                <button
-                  onClick={() => generatePDF(index)}
-                  className="px-4 h-8 text-sm font-medium text-white bg-black rounded-md hover:bg-teal-700 "
-                >
+                <button onClick={() => generatePDF(index)} className="px-4 h-8 text-sm font-medium text-white bg-black rounded-md hover:bg-teal-700 ">
                   Download Receipt
                 </button>
               </div>
