@@ -1,5 +1,4 @@
 import React from "react";
-import { StarIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import { renderStars } from "../../utils/renderStars";
 const ProductCard = ({
@@ -26,7 +25,10 @@ const ProductCard = ({
           <span className="text-xs text-gray-500 ml-1 truncate">
             ({reviews ? reviews : "No reviews to show"})
           </span>
-          <span className=" [clip:rect(1px_1px_1px_1px)!important] [clip-path:inset(50%)!important] !h-[1px] !overflow-hidden !p-0 !absolute !whitespace-nowrap !w-px">
+          <span className="text-xs text-gray-500 ml-1 truncate">
+            ({totalReviews} {totalReviews === 1 ? "review" : "reviews"})
+          </span>
+          <span className="[clip:rect(1px_1px_1px_1px)!important] [clip-path:inset(50%)!important] !h-[1px] !overflow-hidden !p-0 !absolute !whitespace-nowrap !w-px">
             {averageRating} out of 5 Stars. {totalReviews} reviews
           </span>
         </span>
