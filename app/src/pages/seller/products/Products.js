@@ -88,7 +88,6 @@ const Products = () => {
             <th scope="col" className="px-6 py-3">
               Status
             </th>
-            <th scope="col" className="px-6 py-3"></th>
             <th scope="col" className="px-6 py-3">
               Action
             </th>
@@ -106,7 +105,7 @@ const Products = () => {
                   : ""}
               </td>
               <td className="px-6 py-4">{item.price}</td>
-              <td className="px-6 py-4">{item.inStock}</td>
+              <td className="px-6 py-4">{item.inStock !== 0 ? item.inStock : <span className="text-red-500 font-semibold">Out of stock</span>}</td>
               <td className="px-6 py-4">{item.color}</td>
               <td className="px-6 py-4">{item.productSize}</td>
               <td className="px-6 py-4">{item.material}</td>
@@ -121,18 +120,6 @@ const Products = () => {
                     : ""
                 }`}>
                 {item.productStatus}
-              </td>
-              <td>
-                {" "}
-                <select
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}>
-                  {status_types.map((i) => (
-                    <option>{i}</option>
-                  ))}
-                </select>
               </td>
               <td className="px-6 py-4">
                 <Link to={`/seller/editProduct/${item.id}`} className="font-medium text-blue-600 mr-4 hover:underline">
