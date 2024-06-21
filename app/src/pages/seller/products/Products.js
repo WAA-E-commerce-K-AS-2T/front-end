@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -18,7 +19,6 @@ const Products = () => {
     try {
       axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
         dispatch(setLoading(false));
-        console.log(response.data.content);
         setProducts(response.data.content);
       });
     } catch (e) {
@@ -28,7 +28,7 @@ const Products = () => {
   };
   const deleteItem = (id) => {
     dispatch(setLoading(true));
-    axios.delete("http://localhost:8080/api/v1/products/" + id).then((response) => {
+    axios.delete("http://localhost:8080/api/v1/products/" + id, { headers: { authorization: `Bearer ${token}` } }).then((response) => {
       dispatch(setLoading(false));
       toast.success("Succesfully deleted!");
       fetchData();
@@ -85,7 +85,6 @@ const Products = () => {
             <th scope="col" className="px-6 py-3">
               Status
             </th>
-
             <th scope="col" className="px-6 py-3">
               Action
             </th>
@@ -103,7 +102,7 @@ const Products = () => {
                   : ""}
               </td>
               <td className="px-6 py-4">{item.price}</td>
-              <td className="px-6 py-4">{item.inStock}</td>
+              <td className="px-6 py-4">{item.inStock !== 0 ? item.inStock : <span className="text-red-500 font-semibold">Out of stock</span>}</td>
               <td className="px-6 py-4">{item.color}</td>
               <td className="px-6 py-4">{item.productSize}</td>
               <td className="px-6 py-4">{item.material}</td>
@@ -113,7 +112,7 @@ const Products = () => {
                     ? "text-teal-500"
                     : item.productStatus === "Rejected"
                     ? "text-red-500"
-                    : item.productStatus === "In review"
+                    : item.productStatus === "In Review"
                     ? "text-orange-500"
                     : ""
                 }`}>

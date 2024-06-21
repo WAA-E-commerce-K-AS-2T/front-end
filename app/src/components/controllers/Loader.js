@@ -2,7 +2,6 @@ import { Audio } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 const Loader = () => {
   const loading = useSelector((state) => state.loading.isLoading);
-  console.log("loading", loading);
   if (!loading) {
     return null;
   }

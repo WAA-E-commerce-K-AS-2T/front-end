@@ -1,56 +1,55 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Orders = () => {
-  const [products, setProducts] = useState([]);
+  const token = localStorage.getItem("token");
 
-  const getOrderHistory = async () => {
-    const token = localStorage.getItem("token");
+  const [orders, setOrders] = useState([]);
 
-    await axios
-      .get("http://localhost:8080/api/v1/orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  const fetchOrders = () => {
+    axios
+      .get("http://localhost:8080/api/v1/orders", { headers: { authorization: `Bearer ${token}` } })
+      .then((response) => {
+        setOrders(response.data);
       })
-      .then((res) => {
-        setProducts(res.data);
-      })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        toast.error("Error");
+      });
   };
-  console.log(products);
-  products?.forEach((element) => {
-    console.log(element.amount, element.status);
-    element.orderItems.forEach((orderItem) => {
-      console.log(orderItem.product.name);
-      console.log(orderItem.product.price);
-      console.log(orderItem.quantity);
-    });
-  });
-
+  const cancelItem = (id) => {
+    axios
+      .put(`http://localhost:8080/api/v1/orders/${id}/cancel`, { headers: { authorization: `Bearer ${token}` } })
+      .then((response) => {
+        setOrders(response.data);
+        toast.success("Successfully canceled!");
+      })
+      .toast.error("Error");
+  };
+  const changeStatus = (id) => {
+    axios
+      .put(`http://localhost:8080/api/v1/orders/${id}/status`, { headers: { authorization: `Bearer ${token}` } })
+      .then((response) => {
+        setOrders(response.data);
+        toast.success("Success proceeded!");
+      })
+      .toast.error("Error");
+  };
   useEffect(() => {
-    getOrderHistory();
+    fetchOrders();
   }, []);
 
-  const navigate = useNavigate();
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-16 my-8">
       <table className="w-full text-sm text-left rtl:text-right">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Product name
+              User
             </th>
             <th scope="col" className="px-6 py-3">
-              Color
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Category
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Price
+              Amount
             </th>
             <th scope="col" className="px-6 py-3">
               Quantity
@@ -58,27 +57,22 @@ const Orders = () => {
             <th scope="col" className="px-6 py-3">
               Status
             </th>
-
             <th scope="col" className="px-6 py-3">
               Action
             </th>
           </tr>
         </thead>
         <tbody>
-          {products.map((item) => (
+          {orders.map((item) => (
             <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
-              <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
-                <Link to="/:id"> item?.</Link>
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4">10</td>
-              <td className="px-6 py-4 text-teal-500">Shipped</td>
+              <td className="px-6 py-4">{item.username}</td>
+              <td className="px-6 py-4">{item.quantity}</td>
+              <td className="px-6 py-4 font-semibold text-teal-500">{item.productStatus}</td>
               <td className="px-6 py-4">
-                <Link to="" className="font-medium text-blue-600 mr-4 hover:underline">
-                  Edit
-                </Link>
+                <CustomButton text="Proceed status" handleClick={() => changeStatus(item.id)} />
+              </td>
+              <td className="px-6 py-4">
+                <CustomButton text="Cancel order" handleClick={() => cancelItem(item.id)} />
               </td>
             </tr>
           ))}

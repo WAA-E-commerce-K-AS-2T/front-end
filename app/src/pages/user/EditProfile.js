@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import CustomButton from "../../components/controllers/CustomButton";
-import { setLoading } from "../../redux/actions";
+import { setAddress, setLoading } from "../../redux/actions";
 import { useEffect, useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formRef = useRef();
   const token = localStorage.getItem("token");
@@ -41,7 +39,18 @@ const EditProfile = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        dispatch(setAddress(response.data));
+        axios
+          .get("http://localhost:8080/api/v1/buyers/address", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            localStorage.setItem("address", JSON.stringify(res.data));
+          })
+
+          .catch((err) => console.log(err));
         toast.success("Profile changed!");
       })
       .catch((e) => {
@@ -59,15 +68,10 @@ const EditProfile = () => {
   return (
     <div className="mx-24 my-8">
       <h3 className="text-2xl font-bold">Edit profile</h3>
-      <form
-        className="mt-4 text-left  grid grid-cols-2 gap-8"
-        onSubmit={handleSubmit}
-        ref={formRef}>
+      <form className="mt-4 text-left  grid grid-cols-2 gap-8" onSubmit={handleSubmit} ref={formRef}>
         <div className="col-span-1">
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
               Email
             </label>
             <input
@@ -80,9 +84,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Username
             </label>
             <input
@@ -95,9 +97,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="mt-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               User type
             </label>
             <div className="flex gap-4 items-center">

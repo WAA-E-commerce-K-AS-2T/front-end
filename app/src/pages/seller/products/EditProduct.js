@@ -86,13 +86,12 @@ const EditProduct = () => {
         formData.append("photos", file);
       });
 
-      const response = await axios.post("http://localhost:8080/api/v1/products", formData, {
+      await axios.post("http://localhost:8080/api/v1/products", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       toast.success("Successfully added!");
       navigate("/seller/products");
     } catch (error) {

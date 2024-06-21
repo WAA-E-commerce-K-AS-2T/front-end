@@ -25,10 +25,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit }) => {
   };
 
   const submitForm = (data) => {
-    console.log("🚀 ~ submitForm ~ data:", data);
-
     onSubmit(data);
-
     onClose();
     toast.success("Succesfully reviewed!");
   };
@@ -49,9 +46,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit }) => {
                 {[...Array(5)].map((_, index) => (
                   <StarIcon
                     key={index}
-                    className={`w-8 h-8 cursor-pointer ${
-                      index < rating ? "text-yellow-500" : "text-gray-300"
-                    }`}
+                    className={`w-8 h-8 cursor-pointer ${index < rating ? "text-yellow-500" : "text-gray-300"}`}
                     onClick={() => handleStarClick(index)}
                   />
                 ))}
@@ -63,26 +58,16 @@ const ReviewModal = ({ isOpen, onClose, onSubmit }) => {
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
-              <textarea
-                {...field}
-                className="w-full p-2 border rounded-lg mb-4"
-                rows="4"
-                placeholder="Write your review here..."
-              />
+              <textarea {...field} className="w-full p-2 border rounded-lg mb-4" rows="4" placeholder="Write your review here..." />
             )}
           />
           <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg mr-2">
+            <button type="button" onClick={onClose} className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg mr-2">
               Cancel
             </button>
             <button
               type="submit"
-              className={`bg-black text-white px-4 py-2 rounded-lg ${
-                !isValid ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`bg-black text-white px-4 py-2 rounded-lg ${!isValid ? "opacity-50 cursor-not-allowed" : ""}`}
               disabled={!isValid}>
               Submit
             </button>
