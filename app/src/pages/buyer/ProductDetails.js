@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 const ProductDetails = (props) => {
   const { id } = useParams();
   const user = useSelector((state) => state.auth.user);
+  const token = localStorage.getItem("token");
   const [productDetails1, setProductDetails1] = useState({});
   const [isAboutCollapsed, setIsAboutCollapsed] = useState(false);
   const [isSpecsCollapsed, setIsSpecsCollapsed] = useState(false);
@@ -19,7 +20,11 @@ const ProductDetails = (props) => {
 
   const handleReviewSubmit = async (review) => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/v1/products/${id}/reviews`, { rating: review.rating, comment: review.reviewText });
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/products/${id}/reviews`,
+        { rating: review.rating, comment: review.reviewText },
+        { headers: { authorization: `Bearer ${token}` } },
+      );
       setAllReviews([
         ...allReviews,
         {

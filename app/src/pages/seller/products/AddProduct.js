@@ -43,8 +43,7 @@ const AddProduct = () => {
     const form = formRef.current;
     const data = {
       name: form["name"].value,
-      category: selectedCat[0],
-      subCategory: selectedCat[1],
+      categoryIds: selectedCat,
       description: form["description"].value,
       price: form["price"].value,
       brand: form["brand"].value,
