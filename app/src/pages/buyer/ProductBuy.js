@@ -1,41 +1,49 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../../components/product/Product";
+import Pagination from "../../components/common/Pagination";
 
 const ProductBuy = () => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+
+  const fetchProducts = async (page) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/products?page=${
+          page + 1
+        },size=${itemsPerPage}`
+      );
+
+      setProducts(response.data?.content);
+
+      setPageCount(response.data?.totalPages);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/v1/products`);
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching product details:", error);
-      }
-    };
+    fetchProducts(currentPage);
+  }, [currentPage]);
 
-    fetchProducts();
-  }, []);
-  if (!products) {
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage);
+  };
+
+  if (products?.length === 0) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="h-100 relative flex flex-col">
-      <div className="container mx-auto ">
+      <div className="container mx-auto">
         <Product products={products} />
-      </div>{" "}
-      <div className="flex justify-center bottom-4 mt-4 right-4">
-        {/* Pagination component */}
-        <div className="flex items-center space-x-2">
-          <button className="px-3 py-1 text-white bg-black rounded">Previous</button>
-          <span className="px-3 py-1">1</span>
-          <span className="px-3 py-1">2</span>
-          <span className="px-3 py-1">3</span>
-          <button className="px-3 py-1  text-white bg-black rounded">Next</button>
-        </div>
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
       </div>
     </div>
   );

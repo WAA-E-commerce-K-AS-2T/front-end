@@ -5,9 +5,9 @@ const Product = ({ products }) => {
   return (
     <div className="p-4">
       <div className="grid grid-cols-5 gap-4">
-        {products.content.map((product, index) => (
+        {products?.map((product) => (
           <ProductCard
-            key={index}
+            key={product?.id}
             id={product.id}
             name={product.name}
             image={product.productPhotos}
