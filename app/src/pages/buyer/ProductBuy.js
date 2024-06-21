@@ -7,19 +7,17 @@ const ProductBuy = () => {
   const [products, setProducts] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 20;
 
   const fetchProducts = async (page) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/products?page=${
-          page + 1
-        },size=${itemsPerPage}`
+        `http://localhost:8080/api/v1/products?page=${page}&size=${itemsPerPage}`
       );
 
       setProducts(response.data?.content);
 
-      setPageCount(response.data?.totalPages);
+      setPageCount(response.data?.totalElements / itemsPerPage);
     } catch (error) {
       console.error("Error fetching product details:", error);
     }
