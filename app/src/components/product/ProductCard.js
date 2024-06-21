@@ -6,7 +6,7 @@ const ProductCard = ({ id, image, name, price, description, reviews, totalReview
   return (
     <Link to={`/product/${id}`} className="block">
       <div className="flex flex-col items-center justify-start w-full h-full p-4 border border-gray-200 rounded-lg shadow-md">
-        <img src={image[0].imageUrl} alt={name} className="w-36 h-36 mb-2" />
+        <img src={image[0]?.imageUrl} alt={name} className="w-36 h-36 mb-2" />
         <span className="text-sm font-bold text-gray-900">$ {price}</span>
         <span className="text-sm text-gray-700">{name}</span>
         <span className="text-xs text-gray-500">{description}</span>

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem("");
+  const token = localStorage.getItem("token");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -17,10 +17,16 @@ const Products = () => {
   const fetchData = () => {
     dispatch(setLoading(true));
     try {
-      axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
-        dispatch(setLoading(false));
-        setProducts(response.data.content);
-      });
+      axios
+        .get("http://localhost:8080/api/v1/sellers/products", {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          dispatch(setLoading(false));
+          setProducts(response.data);
+        });
     } catch (e) {
       dispatch(setLoading(false));
       toast.error("Error!");

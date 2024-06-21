@@ -16,7 +16,7 @@ const Profile = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("address");
-    dispatch(setUser(null));
+    navigate("/login", { replace: true });
   };
   useEffect(() => {}, [user]);
   return (
