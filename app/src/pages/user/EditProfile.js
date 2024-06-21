@@ -4,9 +4,11 @@ import { setAddress, setLoading } from "../../redux/actions";
 import { useEffect, useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formRef = useRef();
   const token = localStorage.getItem("token");
@@ -48,6 +50,7 @@ const EditProfile = () => {
           })
           .then((res) => {
             localStorage.setItem("address", JSON.stringify(res.data));
+            navigate("/user/profile", { replace: true });
           })
 
           .catch((err) => console.log(err));

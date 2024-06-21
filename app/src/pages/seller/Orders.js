@@ -10,7 +10,7 @@ const Orders = () => {
 
   const fetchOrders = () => {
     axios
-      .get("http://localhost:8080/api/v1/orders", { headers: { authorization: `Bearer ${token}` } })
+      .get("http://localhost:8080/api/v1/sellers/orders", { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
         setOrders(response.data);
       })
@@ -20,21 +20,25 @@ const Orders = () => {
   };
   const cancelItem = (id) => {
     axios
-      .put(`http://localhost:8080/api/v1/orders/${id}/cancel`, { headers: { authorization: `Bearer ${token}` } })
+      .put(`http://localhost:8080/api/v1/orders/${id}/cancel`, {}, { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
-        setOrders(response.data);
+        fetchOrders();
         toast.success("Successfully canceled!");
       })
-      .toast.error("Error");
+      .catch((e) => {
+        toast.error("You cannot cancel order after shipped!");
+      });
   };
   const changeStatus = (id) => {
     axios
-      .put(`http://localhost:8080/api/v1/orders/${id}/status`, { headers: { authorization: `Bearer ${token}` } })
+      .put(`http://localhost:8080/api/v1/orders/${id}/status`, {}, { headers: { authorization: `Bearer ${token}` } })
       .then((response) => {
-        setOrders(response.data);
+        fetchOrders();
         toast.success("Success proceeded!");
       })
-      .toast.error("Error");
+      .catch(() => {
+        toast.error("Error");
+      });
   };
   useEffect(() => {
     fetchOrders();
@@ -46,11 +50,9 @@ const Orders = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
             <th scope="col" className="px-6 py-3">
-              User
+              Order Id
             </th>
-            <th scope="col" className="px-6 py-3">
-              Amount
-            </th>
+
             <th scope="col" className="px-6 py-3">
               Quantity
             </th>
@@ -58,16 +60,21 @@ const Orders = () => {
               Status
             </th>
             <th scope="col" className="px-6 py-3">
+              Amount
+            </th>
+            <th scope="col" className="px-6 py-3">
               Action
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {orders.map((item) => (
             <tr key={item.name} className="odd:bg-white even:bg-gray-50 border-b">
-              <td className="px-6 py-4">{item.username}</td>
-              <td className="px-6 py-4">{item.quantity}</td>
-              <td className="px-6 py-4 font-semibold text-teal-500">{item.productStatus}</td>
+              <td className="px-6 py-4">{item.id}</td>
+              <td className="px-6 py-4">{item.orderItems[0].quantity}</td>
+              <td className="px-6 py-4 font-semibold text-teal-500">{item.status}</td>
+              <td className="px-6 py-4 font-semibold text-semibold">{item.amount}</td>
               <td className="px-6 py-4">
                 <CustomButton text="Proceed status" handleClick={() => changeStatus(item.id)} />
               </td>

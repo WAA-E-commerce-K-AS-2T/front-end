@@ -18,10 +18,16 @@ const AdminProducts = () => {
   const fetchData = () => {
     dispatch(setLoading(true));
     try {
-      axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
-        dispatch(setLoading(false));
-        setProducts(response.data.content);
-      });
+      axios
+        .get("http://localhost:8080/api/v1/admin/products?page=0&size=10", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          dispatch(setLoading(false));
+          setProducts(response.data.content);
+        });
     } catch (e) {
       dispatch(setLoading(false));
       toast.error("Error!");
