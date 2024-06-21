@@ -8,11 +8,9 @@ import toast from "react-hot-toast";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const status_types = ["APPROVED", "REJECTED"];
   const token = localStorage.getItem("");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
 
@@ -21,7 +19,6 @@ const Products = () => {
     try {
       axios.get("http://localhost:8080/api/v1/products?page=0&size=10").then((response) => {
         dispatch(setLoading(false));
-        console.log(response.data.content);
         setProducts(response.data.content);
       });
     } catch (e) {

@@ -3,7 +3,7 @@ import "./App.css";
 import PageRoutes from "./components/common/PageRoutes";
 import Loader from "./components/controllers/Loader";
 import { useEffect } from "react";
-import { setUser } from "./redux/actions";
+import { setAddress, setUser } from "./redux/actions";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+    dispatch(setAddress(JSON.parse(localStorage.getItem("address"))));
   }, [dispatch]);
 
   return (

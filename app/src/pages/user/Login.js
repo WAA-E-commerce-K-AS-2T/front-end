@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setLoading, setUser } from "../../redux/actions";
+import { setAddress, setLoading, setUser } from "../../redux/actions";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -34,6 +34,19 @@ const Login = () => {
             : "";
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
+        if (user.roles[0].name === "ROLE_BUYER") {
+          axios
+            .get("http://localhost:8080/api/v1/buyers/address", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((res) => {
+              localStorage.setItem("address", JSON.stringify(res.data));
+            })
+
+            .catch((err) => console.log(err));
+        }
 
         dispatch(setUser(user));
         navigate(user.auth_type === "admin" ? "/admin/products" : user.auth_type === "seller" ? "/seller/products" : "/");

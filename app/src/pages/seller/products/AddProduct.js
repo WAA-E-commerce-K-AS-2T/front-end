@@ -67,7 +67,6 @@ const AddProduct = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       toast.success("Successfully added!");
       navigate("/seller/products");
     } catch (error) {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/controllers/CustomButton";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -41,7 +40,6 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  const navigate = useNavigate();
   return (
     <div className="relative overflow-x-auto sm:rounded-lg mx-16 my-8">
       <table className="w-full text-sm text-left rtl:text-right">
