@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { productData } from "../../utils/data";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
 import axios from "axios";
@@ -81,18 +80,13 @@ const ProductDetails = (props) => {
         {/* Left side: Breadcrumbs, image, and variant options */}
         <div className="flex-1 lg:w-1/4 flex flex-col p-4 rounded-lg">
           <div className="flex-1">
-            <img src={productDetails1.productPhotos?.[0]?.imageUrl} alt="image of product" className="w-full h-auto mb-4 lg:mb-0" />
+            <img src={productDetails1.productPhotos?.[0]?.imageUrl} alt="product" className="w-full h-auto mb-4 lg:mb-0" />
           </div>
           <div className="flex-1 flex flex-wrap gap-2 justify-left mt-4">
             {productDetails1.productPhotos?.map((photo, index) => (
               <>
                 {" "}
-                <img
-                  key={index}
-                  src={photo.imageUrl}
-                  alt={`Variant ${index}`}
-                  className="w-1/3 h-1/3 p-4 object-cover border border-gray-300 rounded-md"
-                />
+                <img key={index} src={photo.imageUrl} alt={`Variant ${index}`} className="w-1/3 p-4 object-fit border border-gray-300 rounded-md" />
               </>
             ))}
           </div>
