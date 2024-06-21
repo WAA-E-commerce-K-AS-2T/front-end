@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { productData } from "../../utils/data";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ReviewModal from "../../components/product/ReviewModal";
 import axios from "axios";
